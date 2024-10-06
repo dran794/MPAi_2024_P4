@@ -1,7 +1,7 @@
 import TopBar from "../components/TopBar.js";
 import TikiMessage from "../components/TikiMessage.js";
 import BottomBar from "../components/BottomBar.js";
-import { initialiseTimeline, initScatterplot, startRecording, stopRecording, updateAnnotations, uploadAudioBlob } from "../audio.js";
+import { initialiseTimeline, initScatterplot, startRecording, stopRecording, updateAnnotations, uploadAudioBlob, clearAudioTraces } from "../audio.js";
 import { config, resources } from '../store.js'
 
 
@@ -53,7 +53,7 @@ export default {
             :class="{recording: isRecording}"
             class="btn btn-primary"><i class="bi bi-mic"></i>Record</button>
     </div>
-        <div class="text-center my-3">
+    <div class="text-center my-3">
         <button 
             id="clear"
             @mousedown.prevent="handleClearPressed"
@@ -111,15 +111,26 @@ export default {
                 }
                 window.dispatchEvent(new Event('resize'));
             });
+        },
+        initialiseGraph() {
+            const allFormants = this.resources.speakerFormants;
+            const gender = this.config.modelSpeaker.gender;
+            const formants = allFormants.filter(r => r.length == "long" && r.speaker == gender);
+            initScatterplot(this.$refs.dotplot);
+            clearAudioTraces();
+            //updateFormantEllipses(this.$refs.dotplot, formants, this.vowel);
+            updateAnnotations(this.$refs.dotplot, this.config.language);
+            //setSpeakerGender(gender);
         }
     },
     mounted() {
-        const allFormants = this.resources.speakerFormants;
-        const gender = this.config.modelSpeaker.gender;
-        const formants = allFormants.filter(r => r.length == "long" && r.speaker == gender);
-        initScatterplot(this.$refs.dotplot);
+        this.initialiseGraph();
+        //const allFormants = this.resources.speakerFormants;
+        //const gender = this.config.modelSpeaker.gender;
+        //const formants = allFormants.filter(r => r.length == "long" && r.speaker == gender);
+        //initScatterplot(this.$refs.dotplot);
         // updateFormantEllipses(this.$refs.dotplot, formants, this.vowel);
-        updateAnnotations(this.$refs.dotplot, this.config.language);
+        //updateAnnotations(this.$refs.dotplot, this.config.language);
         // When initialising a plotly graph set to autosize, if the graph is not visible, it will be set to 450px.
         // On mobile view, timeline is hidden by default so it will be set to 450px, and thus larger than viewport. 
         // This bit of logic checks if the timeline is visible (i.e. on a larger screen). If it is, initialise it. Otherwise,

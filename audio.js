@@ -236,6 +236,10 @@ export function updateFormantEllipses(plotElement, formants, highlightedVowel) {
 
 }
 
+export function clearAudioTraces() {
+    traces.length = 0;
+}
+
 function createFormantShape(formant, isHighlighted) {
     const shapes = [];
     const step = .05;

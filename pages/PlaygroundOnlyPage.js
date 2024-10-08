@@ -117,10 +117,20 @@ export default {
             const gender = this.config.modelSpeaker.gender;
             const formants = allFormants.filter(r => r.length == "long" && r.speaker == gender);
             initScatterplot(this.$refs.dotplot);
+            
             clearFormantTraces();
             //updateFormantEllipses(this.$refs.dotplot, formants, this.vowel);
             updateAnnotations(this.$refs.dotplot, this.config.language);
             //setSpeakerGender(gender);
+            // When initialising a plotly graph set to autosize, if the graph is not visible, it will be set to 450px.
+            // On mobile view, timeline is hidden by default so it will be set to 450px, and thus larger than viewport. 
+            // This bit of logic checks if the timeline is visible (i.e. on a larger screen). If it is, initialise it. Otherwise,
+            // wait until it is visible to initialise it.
+            const isTimelineVisible = window.getComputedStyle(this.$refs.timeline).getPropertyValue('display') !== "none";
+            if (isTimelineVisible) {
+                initialiseTimeline(this.$refs.timeline);
+                this.isTimelineInitialised = true;
+            }
         }
     },
     mounted() {
@@ -131,15 +141,8 @@ export default {
         //initScatterplot(this.$refs.dotplot);
         // updateFormantEllipses(this.$refs.dotplot, formants, this.vowel);
         //updateAnnotations(this.$refs.dotplot, this.config.language);
-        // When initialising a plotly graph set to autosize, if the graph is not visible, it will be set to 450px.
-        // On mobile view, timeline is hidden by default so it will be set to 450px, and thus larger than viewport. 
-        // This bit of logic checks if the timeline is visible (i.e. on a larger screen). If it is, initialise it. Otherwise,
-        // wait until it is visible to initialise it.
-        const isTimelineVisible = window.getComputedStyle(this.$refs.timeline).getPropertyValue('display') !== "none";
-        if (isTimelineVisible) {
-            initialiseTimeline(this.$refs.timeline);
-            this.isTimelineInitialised = true;
-        }
+
+
         window.addEventListener('keydown', this.handleSpacePressed);
         window.addEventListener('keyup', this.handleSpaceReleased);
     },

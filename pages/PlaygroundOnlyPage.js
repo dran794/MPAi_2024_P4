@@ -117,7 +117,7 @@ export default {
             const gender = this.config.modelSpeaker.gender;
             const formants = allFormants.filter(r => r.length == "long" && r.speaker == gender);
             initScatterplot(this.$refs.dotplot);
-            clearAudioTraces();
+            clearFormantTraces();
             //updateFormantEllipses(this.$refs.dotplot, formants, this.vowel);
             updateAnnotations(this.$refs.dotplot, this.config.language);
             //setSpeakerGender(gender);

@@ -49,6 +49,7 @@ const timelineLayout = {
         b: 50,
         t: 20,
     },
+    colorway : ['#a4c2f4', '#ea9999', '#f3cec9', '#ffd966']
 }
 
 function hzToBark(freqHz) {
@@ -234,9 +235,10 @@ export function updateFormantEllipses(plotElement, formants, highlightedVowel) {
 
     Plotly.react(plotElement, traces, layout);
 
+
 }
 
-export function clearAudioTraces() {
+export function clearFormantTraces() {
     traces.length = 0;
 }
 
@@ -501,13 +503,19 @@ async function doneEncoding(blob, post = true) {
             console.log(traces, layout)
             Plotly.react(scatterplotElement, traces, layout);
 
-            var keys = Object.keys(results[0]).filter(k => k.startsWith("F"))
+            var keys = Object.keys(results[0]).filter(k => k.startsWith("F1") == true || k.startsWith("F2") == true)
+            console.log(keys)
+            var coloursTimeline = []
+            coloursTimeline.push('rgb(164, 194, 244)',  'rgb(234, 153, 153)')
             var debug_traces = []
             for (var k of keys) {
                 debug_traces.push({
                     x: results.map(r => r.time),
                     y: results.map(r => hzToBark(r[k])),
-                    name: k.replace("(Hz)", "(Bark)")
+                    name: k.replace("(Hz)", "(Bark)"),
+                    // marker: {
+                    //     color: coloursTimeline[k],
+                    //   }
                 })
             }
             if (timelineElement) {

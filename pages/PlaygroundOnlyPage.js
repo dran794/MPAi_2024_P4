@@ -1,7 +1,7 @@
 import TopBar from "../components/TopBar.js";
 import TikiMessage from "../components/TikiMessage.js";
 import BottomBar from "../components/BottomBar.js";
-import { initialiseTimeline, initScatterplot, startRecording, stopRecording, updateAnnotations, uploadAudioBlob, clearAudioTraces } from "../audio.js";
+import { initialiseTimeline, initScatterplot, startRecording, stopRecording, updateAnnotations, uploadAudioBlob, clearFormantTraces } from "../audio.js";
 import { config, resources } from '../store.js'
 
 

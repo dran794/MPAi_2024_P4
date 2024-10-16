@@ -24,7 +24,14 @@ export default {
     template: `
     <TopBar @prev-click="prevClicked()" :speakerOptionEnabled="true" />
     <TikiMessage>Try pronouncing different words!</TikiMessage>
-    <p class="text-center">Hold on the Record button or SPACE bar. </p>
+    <p class="text-center">Hold on the Record button or SPACE bar. The below ellipses show an EXAMPLE of what a kaumātua may sound like. <br\>
+    You can set to follow a traditional male or female speaker in the top right corner. <br\>
+    You can click here to hear the sounds: 
+    <a href="#" @click.prevent="playVowel('tā');" style="display:inline-block; text-decoration: underline dotted; font-weight:bold;">ā</a>,
+    <a href="#" @click.prevent="playVowel('hē');" style="display:inline-block; text-decoration: underline dotted; font-weight:bold;">ē</a>,
+    <a href="#" @click.prevent="playVowel('hī');" style="display:inline-block; text-decoration: underline dotted; font-weight:bold;">ī</a>,
+    <a href="#" @click.prevent="playVowel('pō');" style="display:inline-block; text-decoration: underline dotted; font-weight:bold;">ō</a>,
+    <a href="#" @click.prevent="playVowel('tū');" style="display:inline-block; text-decoration: underline dotted; font-weight:bold;">ū</a></p>
     <div class="d-flex justify-content-center flex-grow-1">
         <div class="d-block" ref="dotplot" style="width:100%; height: 100%;"></div>
     </div>
@@ -93,6 +100,17 @@ export default {
                 await this.handleRecordReleased();
             }
         },
+        playVowel(sound) {
+            const samples = this.config.modelSpeaker.samples[sound];
+            if (!samples) {
+                console.warn(`No samples found for sound ${sound} in currently selected model speaker.`);
+                return;
+            }
+            // Randomly selecte a sample to play back.
+            const idx = Math.round(Math.random() * (samples.length - 1))
+            const audio = new Audio(samples[idx]);
+            audio.play();
+        },
         playSample() {
             const samples = this.config.modelSpeaker.samples[this.sound];
             if (!samples) {
@@ -143,6 +161,7 @@ export default {
         window.addEventListener('keyup', this.handleSpaceReleased);
         // Play the sample on page load.
         this.playSample();
+        //this.playVowel(this.sound);
     },
     unmounted() {
         window.removeEventListener('keydown', this.handleSpacePressed);

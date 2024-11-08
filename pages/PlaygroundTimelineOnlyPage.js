@@ -1,7 +1,7 @@
 import TopBar from "../components/TopBar.js";
 import TikiMessage from "../components/TikiMessage.js";
 import BottomBar from "../components/BottomBar.js";
-import { initScatterplot, startRecording, stopRecording, updateAnnotations, uploadAudioBlob, clearFormantTraces } from "../audio.js";
+import { initialiseTimeline, initScatterplot, startRecording, stopRecording, updateAnnotations, uploadAudioBlob, clearFormantTraces } from "../audio.js";
 import { config, resources } from '../store.js'
 
 
@@ -11,7 +11,8 @@ export default {
             config,
             resources,
             graphDisplayed: "dotplot",
-            isRecording: false
+            isRecording: false,
+            isTimelineInitialised: false
         }
     },
     components: { TopBar, TikiMessage, BottomBar },
@@ -19,9 +20,28 @@ export default {
     <TopBar @prev-click="prevClicked()" />
     <TikiMessage>Try record yourself pronouncing a vowel. </TikiMessage>
     <p class="text-center">Experiment with different vowels, and look at both views. What do you notice?  Hold on the Record button or SPACE bar.</p>
-
-    <div class="d-flex justify-content-center flex-grow-1">
-        <div class="d-block" ref="dotplot" style="width:100%; height: 100%;"></div>
+    <ul class="nav nav-pills nav-fill d-lg-none mb-3">
+        <li class="nav-item">
+            <a @click.prevent="changeDisplayedGraph('dotplot')" 
+            class="nav-link"
+            :class="{'active': graphDisplayed === 'dotplot'}"
+            :aria-current="graphDisplayed === 'dotplot'"
+            href="">
+            Dot Plot
+            </a>
+        </li>
+        <li class="nav-item">
+        <a @click.prevent="changeDisplayedGraph('timeline')" 
+            :class="{'active': graphDisplayed === 'timeline'}"
+            :aria-current="graphDisplayed === 'timeline'"
+            class="nav-link"
+            href=""
+        >Timeline</a>
+        </li>
+    </ul>
+    <div class="d-lg-flex flex-column flex-grow-1">
+        <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
+        <div id="playground-timeline" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'dotplot'}" ref="timeline"></div>
     </div>
     <div class="text-center my-3">
         <button 
@@ -85,10 +105,10 @@ export default {
             // Trigger plotly's responsive handler to resize graphs to fit.
             this.$nextTick(function () {
                 // Initialise timeline
-                // if (graphName === "timeline" && !this.isTimelineInitialised) {
-                //     initialiseTimeline(this.$refs.timeline);
-                //     this.isTimelineInitialised = true;
-                // }
+                if (graphName === "timeline" && !this.isTimelineInitialised) {
+                    initialiseTimeline(this.$refs.timeline);
+                    this.isTimelineInitialised = true;
+                }
                 window.dispatchEvent(new Event('resize'));
             });
         },
@@ -106,11 +126,11 @@ export default {
             // On mobile view, timeline is hidden by default so it will be set to 450px, and thus larger than viewport. 
             // This bit of logic checks if the timeline is visible (i.e. on a larger screen). If it is, initialise it. Otherwise,
             // wait until it is visible to initialise it.
-            // const isTimelineVisible = window.getComputedStyle(this.$refs.timeline).getPropertyValue('display') !== "none";
-            // if (isTimelineVisible) {
-            //     initialiseTimeline(this.$refs.timeline);
-            //     this.isTimelineInitialised = true;
-            // }
+            const isTimelineVisible = window.getComputedStyle(this.$refs.timeline).getPropertyValue('display') !== "none";
+            if (isTimelineVisible) {
+                initialiseTimeline(this.$refs.timeline);
+                this.isTimelineInitialised = true;
+            }
         }
     },
     mounted() {

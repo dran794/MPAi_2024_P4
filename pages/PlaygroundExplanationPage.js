@@ -18,7 +18,7 @@ export default {
             this.$router.replace("/")
         },
         nextClick() {
-            this.$router.push({ name: "playground" });
+            this.$router.push({ name: "playgroundOnly" });
         }
     }
 };

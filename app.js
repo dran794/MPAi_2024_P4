@@ -32,7 +32,7 @@ const appRoutes = [
     { name: 'audiopermission', path: '/audiopermission', component: () => import("./pages/AudioPermissionPage.js") },
     { name: 'playground-explanation', path: '/playground-explanation', component: PlaygroundExplanationPage },
     { name: 'playgroundOnly', path: '/playgroundOnly', component: () => import("./pages/PlaygroundOnlyPage.js"), beforeEnter: checkAudioPermission },
-    { name: 'playground', path: '/playground', component: () => import("./pages/PlaygroundPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'playgroundTimelineOnly', path: '/playgroundTimelineOnly', component: () => import("./pages/playgroundTimelineOnly.js"), beforeEnter: checkAudioPermission },
     { name: "model-speaker", path: "/model-speaker", component: ModelSpeakerPage },
     { name: 'target', path: '/target', component: () => import("./pages/TargetPage.js"), beforeEnter: checkAudioPermission },
     { name: 'taa-record', path: '/taa-record', component: () => import("./pages/TaaRecordPage.js"), beforeEnter: checkAudioPermission },

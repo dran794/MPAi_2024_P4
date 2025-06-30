@@ -29,8 +29,10 @@ async function checkAudioPermission(to, from) {
 
 const appRoutes = [
     { name: 'welcome', path: '/', component: WelcomePage },
-    { name: 'audiopermission', path: '/audiopermission', component: () => import("./pages/AudioPermissionPage.js") },
+    {name: 'science-of-speaking', path: '/science-of-speaking', component: () => import("./pages/ScienceOfSpeakingPage.js")},
+    { name: 'audiopermission', path: '/audiopermission', component: () => import("./pages/AudioPermissionPage.js")},
     { name: 'playground-explanation', path: '/playground-explanation', component: PlaygroundExplanationPage },
+    { name: 'test-playground', path: '/test-playground', component: () => import("./pages/TestPlaygroundPage.js") },
     { name: 'playgroundOnly', path: '/playgroundOnly', component: () => import("./pages/PlaygroundOnlyPage.js"), beforeEnter: checkAudioPermission },
     { name: 'playgroundTimelineOnly', path: '/playgroundTimelineOnly', component: () => import("./pages/PlaygroundTimelineOnlyPage.js"), beforeEnter: checkAudioPermission },
     { name: "model-speaker", path: "/model-speaker", component: ModelSpeakerPage },

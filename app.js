@@ -29,7 +29,8 @@ async function checkAudioPermission(to, from) {
 
 const appRoutes = [
     { name: 'welcome', path: '/', component: WelcomePage },
-    {name: 'science-of-speaking', path: '/science-of-speaking', component: () => import("./pages/ScienceOfSpeakingPage.js")},
+    { name: 'science-of-speaking', path: '/science-of-speaking', component: () => import("./pages/ScienceOfSpeakingPage.js")},
+    { name: 'menu', path: '/menu', component: () => import("./pages/MenuPage.js") },
     { name: 'audiopermission', path: '/audiopermission', component: () => import("./pages/AudioPermissionPage.js")},
     { name: 'playground-explanation', path: '/playground-explanation', component: PlaygroundExplanationPage },
     { name: 'test-playground', path: '/test-playground', component: () => import("./pages/TestPlaygroundPage.js") },

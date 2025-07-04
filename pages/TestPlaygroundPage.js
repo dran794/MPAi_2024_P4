@@ -28,25 +28,24 @@ export default {
 
     <div class="container">
         <div class="row">
+            <!-- The letters for pronunciation -->
             <div class="col-6">
                 <div class="container text-center">
                     <div class="row row-cols-2 g-2">
-                    // <div class="col">
-                    //     <button class="btn btn-success" @click="aaClick">ā</button>
-                    // </div>
-                    <div class="col">ō</div>
-                    <div class="col">a</div>
-                    <div class="col">o</div>
-                    <div class="col">e</div>
-                    <div class="col">u</div>
-                    <div class="col">ae</div>
-                    <div class="col">eu</div>
-                    <div class="col">ai</div>
-                    <div class="col">au</div>
+                    <div class="col"><button class="btn btn-success" @click="aaClick">ā</button></div>
+                    <div class="col"><button class="btn btn-success" @click="ooClick">ō</button></div>
+                    <div class="col"><button class="btn btn-success" @click="aClick">a</button></div>
+                    <div class="col"><button class="btn btn-success" @click="oClick">o</button></div>
+                    <div class="col"><button class="btn btn-success" @click="eClick">e</button></div>
+                    <div class="col"><button class="btn btn-success" @click="uClick">u</button></div>
+                    <div class="col"><button class="btn btn-success" @click="aeClick"ae</button></div>
+                    <div class="col"><button class="btn btn-success" @click="euClick">eu</button></div>
+                    <div class="col"><button class="btn btn-success" @click="aiClick">ai</button></div>
+                    <div class="col"><button class="btn btn-success" @click="auClick">au</button></div>
                     </div>
                 </div>
             </div>
-            </div>
+          </div>
             <div class="col-6">
                 <div class="d-lg-flex flex-column flex-grow-1">
                     <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
@@ -79,6 +78,30 @@ export default {
     },
     aaClick() {
       this.$router.push({ name: "taa-record" });
+    },
+    aClick() {
+      this.$router.push({ name: "ta-record" });
+    },
+    oClick() {
+      this.$router.push({ name: "to-record" });
+    },
+    eClick() {
+      this.$router.push({ name: "te-record" });
+    },
+    uClick() {
+      this.$router.push({ name: "tu-record" });
+    },
+    aeClick() {
+      this.$router.push({ name: "tae-record" });
+    },
+    euClick() {
+      this.$router.push({ name: "teu-record" });
+    },
+    aiClick() {
+      this.$router.push({ name: "tai-record" });
+    },
+    auClick() {
+      this.$router.push({ name: "tau-record" });
     },
     nextClick() {
       this.$router.push({ name: "model-speaker" });

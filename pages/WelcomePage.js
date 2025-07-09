@@ -1,6 +1,6 @@
 import BottomBar from "../components/BottomBar.js";
 import { config } from "../store.js";
-import NavigationMenu from "../components/NavigationMenu.js";
+import NavigationMenu from "../components/Sidebar.js";
 
 export default {
   template: `

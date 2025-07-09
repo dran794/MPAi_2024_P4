@@ -84,7 +84,10 @@ resources.speakerFormants = await fetchKaumatuaFormants();
 // Set model speaker to default to first in options.
 config.modelSpeaker = resources.modelSpeakerOptions[0];
 
+// import AppLayout from './AppLayout.js';
+// const app = Vue.createApp(AppLayout);
 const app = Vue.createApp({});
+
 app.use(router);
 // app.use(translate);
 app.mount("#doc");

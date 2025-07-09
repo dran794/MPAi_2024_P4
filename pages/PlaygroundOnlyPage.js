@@ -1,3 +1,4 @@
+import Sidebar from "../components/Sidebar.js";
 import TopBar from "../components/TopBar.js";
 import TikiMessage from "../components/TikiMessage.js";
 import BottomBar from "../components/BottomBar.js";
@@ -14,31 +15,42 @@ export default {
             isRecording: false
         }
     },
-    components: { TopBar, TikiMessage, BottomBar },
+    components: { Sidebar, TopBar, TikiMessage, BottomBar },
     template: `
+  <div>
+    <Sidebar/>
+
+    <!-- Your existing layout -->
     <TopBar @prev-click="prevClicked()" />
-    <TikiMessage>Try record yourself pronouncing a vowel. </TikiMessage>
-    <p class="text-center">Experiment with different vowels, and look at both views. What do you notice?  Hold on the Record button or SPACE bar.</p>
+    <TikiMessage>Try record yourself pronouncing a vowel.</TikiMessage>
+    <p class="text-center">Experiment with different vowels...</p>
 
     <div class="d-flex justify-content-center flex-grow-1">
-        <div class="d-block" ref="dotplot" style="width:100%; height: 100%;"></div>
+      <div class="d-block" ref="dotplot" style="width:100%; height: 100%;"></div>
     </div>
+
     <div class="text-center my-3">
-        <button 
-            id="record"
-            @mousedown.prevent="handleRecordPressed"
-            @touchstart.prevent="handleRecordPressed"
-            @mouseup.prevent="handleRecordReleased"
-            @touchend.prevent="handleRecordReleased"
-            :class="{recording: isRecording}"
-            class="btn btn-primary"><i class="bi bi-mic"></i>Record</button>
+      <button 
+        id="record"
+        @mousedown.prevent="handleRecordPressed"
+        @touchstart.prevent="handleRecordPressed"
+        @mouseup.prevent="handleRecordReleased"
+        @touchend.prevent="handleRecordReleased"
+        :class="{recording: isRecording}"
+        class="btn btn-primary">
+        <i class="bi bi-mic"></i> Record
+      </button>
     </div>
+
     <div class="text-center my-3">
-        <button 
-            id="clear"
-            @mousedown.prevent="handleClearPressed"
-            class="btn btn-primary">Clear</button>
+      <button 
+        id="clear"
+        @mousedown.prevent="handleClearPressed"
+        class="btn btn-primary">
+        Clear
+      </button>
     </div>
+  </div>
     `,
     methods: {
         prevClicked() {

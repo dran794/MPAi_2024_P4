@@ -1,33 +1,100 @@
+import TopBar from "../components/TopBar.js";
+import TikiMessage from "../components/TikiMessage.js";
+import BottomBar from "../components/BottomBar.js";
 import {
-  startRecording,
-  stopRecording,
   initialiseTimeline,
   initScatterplot,
+  startRecording,
+  stopRecording,
   updateAnnotations,
+  uploadAudioBlob,
 } from "../audio.js";
-import RecordPage from "../components/RecordPage.js";
+import { config, resources } from "../store.js";
 
 export default {
-  components: { RecordPage },
+  data() {
+    return {
+      config,
+      resources,
+      graphDisplayed: "dotplot",
+      isRecording: false,
+      isTimelineInitialised: false,
+    };
+  },
+  components: { TopBar, TikiMessage, BottomBar },
   template: `
-        
-        <TopBar @prev-click="prevClicked()" />
-        <div class="container">
-            <div class="row">
-                <div class"col-6">
-                    <!--Image goes here-->
-                </div>
-                <div class="col-6">
-                    <!--Graph goes here-->
-                </div>
-            </div>
-        <div>
 
+    <div class="container my-3">
+      <div class="row">
+        <div class="col">
+              <a class="p-3 border bg-light d-inline-block" @click="prevPage()" style="cursor:pointer;">Back</a>
+        </div>
 
+        <div class="col">
+          <h1 class="text-center">Test Playground</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5">
+      <div class="row align-items-start">
+        <!-- The letters for pronunciation -->
+        <div class="col-6">
+          <!-- Test Image goes here -->
+          <img src="images/test_image.png" alt="description" width="300" height="300">
+        </div>
+        <!-- The graph area, on the same row as the word list -->
+        <div class="col-6">
+          <div class="d-lg-flex flex-column flex-grow-1">
+            <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
+            <div id="playground-timeline" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'dotplot'}" ref="timeline"></div>
+          </div>
+          <div class="text-center my-3">
+            <button 
+              id="record"
+              @mousedown.prevent="handleRecordPressed"
+              @touchstart.prevent="handleRecordPressed"
+              @mouseup.prevent="handleRecordReleased"
+              @touchend.prevent="handleRecordReleased"
+              :class="{recording: isRecording}"
+              class="btn btn-primary"><i class="bi bi-mic"></i>Record
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     `,
+
   methods: {
     prevPage() {
       this.$router.push({ name: "welcome" });
+    },
+    aaClick() {
+      this.$router.push({ name: "audiopermission" , query: { redirectTo: "taa-record" } });
+    },
+    aClick() {
+      this.$router.push({ name: "ta-record" });
+    },
+    oClick() {
+      this.$router.push({ name: "to-record" });
+    },
+    eClick() {
+      this.$router.push({ name: "te-record" });
+    },
+    uClick() {
+      this.$router.push({ name: "tu-record" });
+    },
+    aeClick() {
+      this.$router.push({ name: "tae-record" });
+    },
+    euClick() {
+      this.$router.push({ name: "teu-record" });
+    },
+    aiClick() {
+      this.$router.push({ name: "tai-record" });
+    },
+    auClick() {
+      this.$router.push({ name: "tau-record" });
     },
     nextClick() {
       this.$router.push({ name: "model-speaker" });

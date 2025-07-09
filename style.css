@@ -1,68 +1,206 @@
-#welcome {
-	max-width: 90%;
-	margin: auto;
-	text-align: center;
-	font-size: 1.25vh;
+/* Global Styles */
+:root {
+  --bs-btn-bg: #366024;
 }
 
-#controls {
-	text-align: center;
-}
-
-.form-select {
-	display: inline-block;
-	max-width: 100px;
-}
+/* Elements */
 
 canvas {
-	display: inline-block;
-	background: #202020;
-	width: 95%;
-	height: 45%;
-	box-shadow: 0px 0px 10px;
+  display: inline-block;
+  background: #202020;
+  width: 95%;
+  height: 45%;
+  box-shadow: 0px 0px 10px;
+}
+
+html,
+body {
+  height: auto;
+  max-width: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+h1 {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+}
+
+/*ID */
+
+#welcome {
+  max-width: 100%;
+  margin: auto;
+  text-align: center;
+  font-size: 1.25vh;
+}
+
+#doc {
+  height: 100%;
+  max-height: 900px;
 }
 
 #record {
-	border-radius: 50%;
-	width: 100px;
-	height: 100px;
-	text-align: center;
-	display: inline-block;
-	margin: auto;
-	margin-top: 10px;
-	margin-bottom: 10px;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  display: inline-block;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#controls {
+  text-align: center;
 }
 
 #record.recording {
-	background: red;
-	background: -webkit-radial-gradient(center, ellipse cover, #ff0000 0%, lightgrey 75%, lightgrey 100%, #7db9e8 100%);
-	background: -moz-radial-gradient(center, ellipse cover, #ff0000 0%, lightgrey 75%, lightgrey 100%, #7db9e8 100%);
-	background: radial-gradient(center, ellipse cover, #ff0000 0%, lightgrey 75%, lightgrey 100%, #7db9e8 100%);
+  background: red;
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    #ff0000 0%,
+    lightgrey 75%,
+    lightgrey 100%,
+    #7db9e8 100%
+  );
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    #ff0000 0%,
+    lightgrey 75%,
+    lightgrey 100%,
+    #7db9e8 100%
+  );
+  background: radial-gradient(
+    center,
+    ellipse cover,
+    #ff0000 0%,
+    lightgrey 75%,
+    lightgrey 100%,
+    #7db9e8 100%
+  );
 }
 
 #viz_container {
-	display: inline-block;
-	max-width: 100%;
+  display: inline-block;
+  max-width: 100%;
 }
 
 #viz {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-	text-align: center;
-	margin: auto;
-	margin-top: 10px;
-	max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  margin-top: 10px;
+  max-width: 100%;
 }
 
 #plot {
-	width: 50vh;
-	max-width: 100vw;
-	height: 50vh;
-	text-align: center;
-	margin: auto;
-	margin-top: 10px;
-	border: 1px solid black;
-	overflow: hidden;
+  width: 50vh;
+  max-width: 100vw;
+  height: 50vh;
+  text-align: center;
+  margin: auto;
+  margin-top: 10px;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+#analyzer {
+  width: 100%;
+}
+
+#record {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+}
+
+/* Classes */
+
+.form-select {
+  display: inline-block;
+  max-width: 100px;
+}
+
+.bg-burnt-orange {
+  background-color: #c24f24 !important;
+}
+.bg-charcoal {
+  background-color: #3b2d2c !important;
+}
+.bg-cream {
+  background-color: #e6d8b2 !important;
+}
+.bg-kraft {
+  background-color: #927c5a !important;
+}
+.bg-beige {
+  background-color: #e4c8a1 !important;
+}
+.bg-clay {
+  background-color: #a5432c !important;
+}
+.bg-navy {
+  background-color: #262628 !important;
+}
+.bg-greybrown {
+  background-color: #7c6e5d !important;
+}
+.bg-offwhite {
+  background-color: #faf4e5 !important;
+}
+
+.text-burnt-orange {
+  color: #c24f24 !important;
+}
+
+.full-height-row {
+  min-height: 70vh; /* or 100vh if you want full screen */
+}
+
+.content {
+  min-height: 100vh; /* ensure it fills entire viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.full-screen {
+  position: relative; /* ✅ allow content to flow */
+  min-height: 100vh; /* ✅ fill screen, but allow growth */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* ✅ still prevent horizontal overflow */
+  z-index: 0;
+}
+
+@media (min-width: 992px) {
+  #playground-dotplot {
+    height: 75%;
+    min-height: 300px;
+  }
+
+  #playground-timeline {
+    height: 25%;
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 992px) {
+  #playground-timeline {
+    height: 100%;
+  }
+
+  #playground-dotplot {
+    height: 100%;
+  }
 }

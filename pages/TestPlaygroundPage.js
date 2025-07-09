@@ -23,53 +23,71 @@ export default {
   },
   components: { TopBar, TikiMessage, BottomBar },
   template: `
-    
-    <button class="p-3 border bg-light" @click="prevPage()">Science of Speaking</button>
+<!-- Link to your custom stylesheet -->
+<link rel="stylesheet" href="style.css">
 
-    <div class="container">
-        <div class="row">
-            <!-- The letters for pronunciation -->
-            <div class="col-6">
-                <div class="container text-center">
-                    <div class="row row-cols-2 g-2">
-                    <div class="col"><button class="btn btn-success" @click="aaClick">ā</button></div>
-                    <div class="col"><button class="btn btn-success" @click="ooClick">ō</button></div>
-                    <div class="col"><button class="btn btn-success" @click="aClick">a</button></div>
-                    <div class="col"><button class="btn btn-success" @click="oClick">o</button></div>
-                    <div class="col"><button class="btn btn-success" @click="eClick">e</button></div>
-                    <div class="col"><button class="btn btn-success" @click="uClick">u</button></div>
-                    <div class="col"><button class="btn btn-success" @click="aeClick"ae</button></div>
-                    <div class="col"><button class="btn btn-success" @click="euClick">eu</button></div>
-                    <div class="col"><button class="btn btn-success" @click="aiClick">ai</button></div>
-                    <div class="col"><button class="btn btn-success" @click="auClick">au</button></div>
-                    </div>
-                </div>
-            </div>
+<TopBar/>
+
+<!-- Main background container -->
+<div class="w-100 bg-cream py-4 mt-5">
+  <!-- Header row -->
+  <div class="container my-3">
+    <div class="row">
+      <div class="col">
+        <a class="p-3 border bg-light d-inline-block" @click="prevPage()" style="cursor:pointer;">Back</a>
+      </div>
+      <div class="col">
+        <h1 class="text-center">Test Playground</h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content row -->
+  <div class="container py-5">
+    <div class="row align-items-stretch full-height-row">
+      
+      <!-- Left column (letter buttons) -->
+      <div class="col-4 d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="d-flex flex-column justify-content-between align-items-center h-100">
+          <div class="row row-cols-2 g-3">
+            <div span class="col"><button class="btn flex-row btn-danger fw-bold" @click="aaClick">ā</button></div>
+            <div span class="col"><button class="btn btn-danger fw-bold" @click="ooClick">ō</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="aClick">a</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="oClick">o</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="eClick">e</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="uClick">u</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="aeClick">ae</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="euClick">eu</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="aiClick">ai</button></div>
+            <div class="col"><button class="btn btn-danger fw-bold" @click="auClick">au</button></div>
           </div>
-            <div class="col-6">
-                <div class="d-lg-flex flex-column flex-grow-1">
-                    <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
-                    <div id="playground-timeline" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'dotplot'}" ref="timeline"></div>
-                </div>
-                <div class="text-center my-3">
-                    <button 
-                        id="record"
-                        @mousedown.prevent="handleRecordPressed"
-                        @touchstart.prevent="handleRecordPressed"
-                        @mouseup.prevent="handleRecordReleased"
-                        @touchend.prevent="handleRecordReleased"
-                        :class="{recording: isRecording}"
-                        class="btn btn-primary"><i class="bi bi-mic"></i>Record
-                    </button>
-            </div>
-    </div>
-
         </div>
+      </div>
+
+      <!-- Right column (graph + record button) -->
+      <div class="col-8 d-flex flex-column justify-content-between h-100">
+        <div class="d-lg-flex flex-column flex-grow-1">
+          <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
+          <div id="playground-timeline" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'dotplot'}" ref="timeline"></div>
+        </div>
+        <div class="text-center my-3">
+          <button 
+            id="record"
+            @mousedown.prevent="handleRecordPressed"
+            @touchstart.prevent="handleRecordPressed"
+            @mouseup.prevent="handleRecordReleased"
+            @touchend.prevent="handleRecordReleased"
+            :class="{recording: isRecording}"
+            class="btn btn-primary">
+            <i class="bi bi-mic"></i> Record
+          </button>
+        </div>
+      </div>
+
     </div>
+  </div>
+</div>
 
-
-
-    
     `,
 
   methods: {
@@ -77,7 +95,10 @@ export default {
       this.$router.push({ name: "welcome" });
     },
     aaClick() {
-      this.$router.push({ name: "taa-record" });
+      this.$router.push({
+        name: "audiopermission",
+        query: { redirectTo: "taa-record" },
+      });
     },
     aClick() {
       this.$router.push({ name: "ta-record" });

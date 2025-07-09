@@ -2,11 +2,12 @@ import TopBar from "../components/TopBar.js";
 import BottomBar from "../components/BottomBar.js";
 import TikiMessage from "../components/TikiMessage.js";
 import { updateAnalysers, initAudio, updateInputSource } from "../audio.js";
-import { config } from '../store.js'
+import { config, resources } from "../store.js";
 
 export default {
-    components: { TopBar, BottomBar, TikiMessage },
-    template: `
+  components: { TopBar, BottomBar, TikiMessage },
+
+  template: `
         <TopBar @prev-click="prevClicked()" />
         <div class="flex-grow-1 ">
             <TikiMessage>
@@ -38,52 +39,77 @@ export default {
         </div>
         <BottomBar @continue-click="nextClick()" :isContinueEnabled="hasGrantedPermission" />
     `,
-    methods: {
-        prevClicked() {
-            this.$router.replace("/");
-        },
-        nextClick() {
-            if (this.$route.redirectedFrom) {
-                this.$router.push(this.$route.redirectedFrom);
-            } else {
-                this.$router.push({ name: "playground-explanation" });
-            }
-        },
-        analyserVisibilityChanged(element) {
-            if (!element) {
-                return;
-            }
-            updateAnalysers(element);
-        },
-        async getMicPermission() {
-            await initAudio().then(() => {
-                this.hasGrantedPermission = true;
-                navigator.mediaDevices.enumerateDevices().then((devices) => {
-                    // Save a list of input devices to display.
-                    this.inputDevices = devices.filter(device => device.kind === "audioinput");
-                    // Sets default device to be the initial selected device.
-                    const defaultDevice = this.inputDevices.find(device => device.deviceId === "default")
-                    this.config.audioInput = defaultDevice ? "default" : this.inputDevices[0].deviceId;
-                }, () => { console.log("Failed to enumerate devices.") });
-            }, () => {
-                this.hasGrantedPermission = false;
-            });
-            return this.hasGrantedPermission;
-        },
-        audioInputChanged(newInputId) {
-            updateInputSource(newInputId);
-            this.config.audioInput = newInputId;
-        }
+  methods: {
+    prevClicked() {
+      this.$router.replace("/");
     },
-    data() {
-        return {
-            hasCheckedPermission: false,
-            hasGrantedPermission: null,
-            inputDevices: [],
-            config
-        }
+    nextClick() {
+      const target = this.$route.query.redirectTo || "playground-explanation";
+      if (this.$route.redirectedFrom) {
+        this.$router.push(this.$route.redirectedFrom);
+      } else {
+        this.$router.push({ name: target });
+      }
     },
-    mounted() {
+    analyserVisibilityChanged(element) {
+      if (!element) {
+        return;
+      }
+      updateAnalysers(element);
+    },
+    // async getMicPermission() {
+    //     await initAudio().then(() => {
+    //         this.hasGrantedPermission = true;
+    //         config.hasMicPermission = true;
+    //         navigator.mediaDevices.enumerateDevices().then((devices) => {
+    //             // Save a list of input devices to display.
+    //             this.inputDevices = devices.filter(device => device.kind === "audioinput");
+    //             // Sets default device to be the initial selected device.
+    //             const defaultDevice = this.inputDevices.find(device => device.deviceId === "default")
+    //             this.config.audioInput = defaultDevice ? "default" : this.inputDevices[0].deviceId;
+    //         }, () => { console.log("Failed to enumerate devices.") });
+    //     }, () => {
+    //         this.hasGrantedPermission = false;
+    //         config.hasMicPermission = false;
+    //     });
+    //     return this.hasGrantedPermission;
+    // },
 
-    }
-}
+    async getMicPermission() {
+      try {
+        await initAudio(); // returns cached promise if already done
+        this.hasGrantedPermission = true;
+        config.hasMicPermission = true;
+
+        if (!this.inputDevices?.length) {
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          this.inputDevices = devices.filter((d) => d.kind === "audioinput");
+          const defaultDevice = this.inputDevices.find(
+            (d) => d.deviceId === "default"
+          );
+          this.config.audioInput = defaultDevice
+            ? "default"
+            : this.inputDevices[0]?.deviceId;
+        }
+      } catch (err) {
+        console.error("Mic init failed:", err); // erm, optional
+        this.hasGrantedPermission = false;
+        config.hasMicPermission = false;
+      }
+      return this.hasGrantedPermission;
+    },
+    audioInputChanged(newInputId) {
+      updateInputSource(newInputId);
+      this.config.audioInput = newInputId;
+    },
+  },
+  data() {
+    return {
+      hasCheckedPermission: false,
+      hasGrantedPermission: null,
+      inputDevices: [],
+      config,
+    };
+  },
+  mounted() {},
+};

@@ -16,3 +16,8 @@ There are many types of selectors:
 - CSS class Selector - `.` is used to assign a class attribute to an HTML element. You can specify if a certain element should trigger the class attributes to the element, i.e. `p.center`
 - CSS Universal Selector - `*` changes ALL HTML elements.
 - CSS Group Selector - You can group elements together if you want them to share properties, e.g. `p, h1, h2, {...}`
+
+Use viewpoints, clamps and flexbox to keep things responsive
+
+Snap Scrolling:
+parent{scroll-snap-type: y mandatory;} children{scroll-snap-align: start;}

@@ -1,9 +1,47 @@
 /* Global Styles */
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+
 :root {
+  --ff: "Playfair Display";/*, "Merriweather", serif /* Fall back into san-serif if unable to load primary option */
   --bs-btn-bg: #366024;
+  --mpai-theme-background: #FCF8E8;
+  --mpai-theme-dark: #121211;
+  /* --mpai-color-s: 
+  --mpai-color-p:
+  --mpai-color-a: */
+  --mpai-red:#A72C1E;
+  --mpai-orange:#B86D21;
+  
+  --h1: bold 54px/60px var(--ff);
+  --h2: bold 36px/48px var(--ff);
+  --h3: bold 24px/36px var(--ff);
+  --links: 18px/18px var(--ff);
+  --p: 18px/30px var(--ff);
+  --p1: 24px/30px var(--ff);
+  --p2: 36px/48px var(--ff);
+  --small-text: 14px/28px var(--ff);
 }
 
 /* Elements */
+
+
+body {
+  height: auto;
+  width: 100%;
+  margin: 20px auto;
+  max-width: 75%;
+  background-color: var(--mpai-theme-background);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+h1 {font: var(--h1);}
+h2 {font: var(--h2);}
+h3 {font: var(--h3);}
+p {font: var(--p);}
 
 canvas {
   display: inline-block;
@@ -11,19 +49,6 @@ canvas {
   width: 95%;
   height: 45%;
   box-shadow: 0px 0px 10px;
-}
-
-html,
-body {
-  height: auto;
-  max-width: flex;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-h1 {
-  font-family: "Merriweather", serif;
-  font-weight: 700;
 }
 
 /*ID */
@@ -123,6 +148,13 @@ h1 {
 
 /* Classes */
 
+.wrapper {
+  min-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+};
+
 .form-select {
   display: inline-block;
   max-width: 100px;
@@ -183,6 +215,8 @@ h1 {
   z-index: 0;
 }
 
+.element:hover{scale: 1.05;}
+
 @media (min-width: 992px) {
   #playground-dotplot {
     height: 75%;
@@ -203,4 +237,58 @@ h1 {
   #playground-dotplot {
     height: 100%;
   }
+}
+
+.buttons {
+  display: flex;
+  margin: 100px auto;
+  justify-content: space-between;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Repeating code */
+.buttons > *{
+      font-family: var(--ff);
+    font-size: 2.25rem;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 28px 108px;
+  border-radius: 8px;
+  transition: var(--transition);
+  }
+.buttons > *:hover{
+  transition: var(--transition);
+  }
+
+.dashing-fill{
+  color: #fff;
+  background: linear-gradient(
+    270deg,
+    var(--mpai-red),
+    var(--mpai-orange),
+    var(--mpai-red),
+    var(--mpai-orange)
+  );
+  background-size: 300% 300%;
+  animation: bg 10s ease-in-out infinite;
+}@keyframes bg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.dashing-fill:hover {
+  animation: bg 2s ease-in-out infinite;
+}
+
+.small-text {
+  font: var(--small-text);
+  color: hsl(0, 0%, 60%);
 }

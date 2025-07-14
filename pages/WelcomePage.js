@@ -7,22 +7,36 @@ export default {
     BottomBar,
   },
   template: `
-    <div class="full-screen bg-cream">
+    <div class="mpai-theme-background">
 
-      <!-- BIG HEADER (only visible when !showTopBar) -->
-      <div
-        v-if="!showTopBar"
-        class="position-fixed top-0 start-0 w-100 bg-charcoal shadow p-3 text-center text-white"
-        style="z-index: 9999; min-height:30vh;"
-      >
-        <div class="d-flex justify-content-center flex-column align-items-center">
-          <h1 class="m-0">MPAi</h1>
-          <h5 class="m-0">The Māori Pronunciation Aid Tool</h5>
+
+<!-- Welcome Section -->
+<section class="welcome-section d-flex align-items-stretch" style="height: 90vh; background-color: var(--mpai-theme-dark);">
+  <div class="container-fluid">
+    <div class="row h-100">
+      
+      <!-- Left Column: Vertically Centered -->
+      <div class="col-lg-6 d-flex align-items-center">
+        <div class="text-white ms-lg-5">
+          <h1>MPAi</h1>
+          <p>The Māori Pronunciation Aid Tool</p>
+          <p class="small-text">The first tool designed to improve your Maori Pronunciation. Click to get started!<p>
+        </div>
+      </div>
+      
+      <!-- Right Column: Fully Centered -->
+      <div class="col-lg-6 d-flex align-items-center justify-content-center">
+        <div class="buttons">
+          <a href="#" class="dashing-fill" style="text-size:36px;">Begin</a>
         </div>
       </div>
 
-      <!-- COMPACT TOPBAR (appears on scroll) -->
-      <TopBar/>
+    </div>
+  </div>
+</section>
+
+
+
 
       <!-- Science of Speaking / MPAi Playground -->
       <div class="container-fluid" style="margin-top: 100px; min-height: 75vh;">
@@ -91,15 +105,6 @@ export default {
     return {
       showTopBar: true,
     };
-  },
-
-  mounted() {
-    this.handleScroll = () => {
-      const y = window.scrollY;
-      this.showTopBar = y > 500;
-      console.log("showTopBar:", this.showTopBar);
-    };
-    window.addEventListener("scroll", this.handleScroll);
   },
 
   beforeUnmount() {

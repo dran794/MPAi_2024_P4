@@ -27,82 +27,22 @@ async function checkAudioPermission(to, from) {
 }
 
 const appRoutes = [
-  { name: "welcome", path: "/", component: WelcomePage },
-  {
-    name: "science-of-speaking",
-    path: "/science-of-speaking",
-    component: () => import("./pages/ScienceOfSpeakingPage.js"),
-  },
-  {
-    name: "audiopermission",
-    path: "/audiopermission",
-    component: () => import("./pages/AudioPermissionPage.js"),
-  },
-  {
-    name: "playground-explanation",
-    path: "/playground-explanation",
-    component: PlaygroundExplanationPage,
-  },
-  {
-    name: "test-playground",
-    path: "/test-playground",
-    component: () => import("./pages/TestPlaygroundPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "playgroundOnly",
-    path: "/playgroundOnly",
-    component: () => import("./pages/PlaygroundOnlyPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "playgroundTimelineOnly",
-    path: "/playgroundTimelineOnly",
-    component: () => import("./pages/PlaygroundTimelineOnlyPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "model-speaker",
-    path: "/model-speaker",
-    component: ModelSpeakerPage,
-  },
-  {
-    name: "target",
-    path: "/target",
-    component: () => import("./pages/TargetPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "taa-record",
-    path: "/taa-record",
-    component: () => import("./pages/TaaRecordPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "hee-record",
-    path: "/hee-record",
-    component: () => import("./pages/HeeRecordPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "hii-record",
-    path: "/hii-record",
-    component: () => import("./pages/HiiRecordPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "po-record",
-    path: "/poo-record",
-    component: () => import("./pages/PooRecordPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  {
-    name: "tuu-record",
-    path: "/tuu-record",
-    component: () => import("./pages/TuuRecordPage.js"),
-    beforeEnter: checkAudioPermission,
-  },
-  { name: "finish", path: "/finish", component: FinishPage },
+    { name: 'welcome', path: '/', component: WelcomePage },
+    { name: 'science-of-speaking', path: '/science-of-speaking', component: () => import("./pages/ScienceOfSpeakingPage.js")},
+    { name: 'menu', path: '/menu', component: () => import("./pages/MenuPage.js") },
+    { name: 'audiopermission', path: '/audiopermission', component: () => import("./pages/AudioPermissionPage.js")},
+    { name: 'playground-explanation', path: '/playground-explanation', component: PlaygroundExplanationPage },
+    { name: 'test-playground', path: '/test-playground', component: () => import("./pages/TestPlaygroundPage.js") },
+    { name: 'playgroundOnly', path: '/playgroundOnly', component: () => import("./pages/PlaygroundOnlyPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'playgroundTimelineOnly', path: '/playgroundTimelineOnly', component: () => import("./pages/PlaygroundTimelineOnlyPage.js"), beforeEnter: checkAudioPermission },
+    { name: "model-speaker", path: "/model-speaker", component: ModelSpeakerPage },
+    { name: 'target', path: '/target', component: () => import("./pages/TargetPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'taa-record', path: '/taa-record', component: () => import("./pages/TaaRecordPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'hee-record', path: '/hee-record', component: () => import("./pages/HeeRecordPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'hii-record', path: '/hii-record', component: () => import("./pages/HiiRecordPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'po-record', path: '/poo-record', component: () => import("./pages/PooRecordPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'tuu-record', path: '/tuu-record', component: () => import("./pages/TuuRecordPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'finish', path: '/finish', component: FinishPage }
 ];
 
 const router = VueRouter.createRouter({
@@ -150,7 +90,10 @@ resources.speakerFormants = await fetchKaumatuaFormants();
 // Set model speaker to default to first in options.
 config.modelSpeaker = resources.modelSpeakerOptions[0];
 
+// import AppLayout from './AppLayout.js';
+// const app = Vue.createApp(AppLayout);
 const app = Vue.createApp({});
+
 app.use(router);
 // app.use(translate);
 app.mount("#doc");

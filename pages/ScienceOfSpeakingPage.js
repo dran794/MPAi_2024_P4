@@ -1,15 +1,45 @@
+import TopBar from "../components/TopBar.js";
+
 export default {
-    data() {
-      return {
-        images: [
-            'images/ScienceOfSpeaking/p1.png',
-            'images/ScienceOfSpeaking/p2.png',
-            'images/ScienceOfSpeaking/p3.png'
-        ]
-      };
-    },
-    template: `
-      <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+  components: { TopBar },
+  data() {
+    return {
+      images: [
+        "images/ScienceOfSpeaking/p1.png",
+        "images/ScienceOfSpeaking/p2.png",
+        "images/ScienceOfSpeaking/p3.png",
+      ],
+    };
+  },
+  template: `
+    <TopBar />
+    <div class="container-fluid d-flex flex-column vh-100">
+      <div class="row" style="height:15%"></div>
+      
+      <!-- Main Content Row -->
+      <div class="row flex-grow-1 position-relative">
+        <div class="col p-0">
+          <iframe 
+            src="https://www.canva.com/design/DAGGkZnYEBo/4lT1haX4lenGwclLl2VdRA/view?embed" 
+            style="width: 100%; height: 100%; margin: 0;" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Footer Row -->
+      <div class="row" style="height: 5%;">
+        <div class="col text-center align-self-center">
+          <p>Acknowledgements</p>
+        </div>
+      </div>
+    </div>
+
+    `,
+};
+
+`
+  <div id="carousel" class="carousel slide" data-bs-ride="carousel">
         <!-- Carousel indicators -->
         <div class="carousel-indicators">
           <button
@@ -44,6 +74,4 @@ export default {
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-    `
-  };
-  
+  `;

@@ -29,8 +29,55 @@ export default {
 <TopBar/>
 
 <!-- Main background container -->
-<div class="w-100 bg-cream py-4 mt-5">
-  <!-- Header row -->
+<div>
+<section class="container-fluid full-vh d-flex">
+  <!-- Header Gap-->
+  <div class="row" style="height: 15%;"></div>
+  
+  <!-- Main Content -->
+  <div class="container-fluid vh-100">
+    <div class="row h-100">
+
+      <!-- Left Column: Vowel Grid -->
+      <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <div class="row row-cols-2 row-cols-md-2 g-4 text-center">
+          <div class="col"><h3>a</h3></div>
+          <div class="col"><h3>e</h3></div>
+          <div class="col"><h3>i</h3></div>
+          <div class="col"><h3>o</h3></div>
+          <div class="col"><h3>u</h3></div>
+          <div class="col"><h3>ā</h3></div>
+          <div class="col"><h3>ē</h3></div>
+          <div class="col"><h3>ī</h3></div>
+          <div class="col"><h3>ō</h3></div>
+          <div class="col"><h3>ū</h3></div>
+
+        </div>
+      </div>
+
+      <!-- Right Column: Chart (to be added) -->
+      <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <!-- Chart will go here -->
+        <!-- <canvas id="vowelChart"></canvas> -->
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="row" style="height: 10%;"></div>
+</section>
+
+  
+
+
+
+
+
+
+
+
+<!-- Header row -->
   <div class="container my-3">
     <div class="row">
       <div class="col">
@@ -68,7 +115,6 @@ export default {
       <div class="col-8 d-flex flex-column justify-content-between h-100">
         <div class="d-lg-flex flex-column flex-grow-1">
           <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
-          <div id="playground-timeline" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'dotplot'}" ref="timeline"></div>
         </div>
         <div class="text-center my-3">
           <button 

@@ -8,47 +8,88 @@ export default {
   components: { TopBar, BottomBar, TikiMessage },
 
   template: `
-        <TopBar @prev-click="prevClicked()" />
-        <div class="flex-grow-1 ">
-            <TikiMessage>
-                <template v-if="!hasGrantedPermission">Before we go on, I need to be able to hear you.</template>
-                <template v-if="hasGrantedPermission">Ka pai. Try saying something.</template>
-            </TikiMessage>
-            <p class="text-center" v-if="!hasGrantedPermission">Your microphone is used to listen to your pronunciation so analysis and comparison can happen. Your voice is processed on your device and no data is collected. If you are participating in one of our research studies, you can choose to record and send audio samples.</p>
-            <p class="text-center" v-if="hasGrantedPermission">If nothing is showing on the monitor when you say something, try changing the microphone below.</p>
-            <div class="mt-3 d-flex flex-column gap-2 col-lg-6 justify-content-center mx-auto">
-            <a class="btn btn-secondary" @click="getMicPermission()" :class="{'d-none': hasGrantedPermission}">Grant microphone permission</a>
-                <template v-if="hasGrantedPermission">
-                    <canvas id="analyser" style="background-color: lightgray;" :ref="analyserVisibilityChanged"></canvas>
-                    <h2 class="fs-6 mb-0 mt-3">Choose a Microphone</h2>
-                    <ul class="list-group">
-                        <li class="list-group-item" v-for="device in inputDevices" >
-                            <input class="form-check-input me-1" type="radio" :checked="device.deviceId === config.audioInput" @change="audioInputChanged(device.deviceId)" :value="device.deviceId" :id="'audioinputcb-' + device.deviceId">
-                            <label class="form-check-label" :for="'audioinputcb-' + device.deviceId">{{device.label}}</label>
-                        </li>
-                    </ul>
-                    <!--<select @change="audioInputChanged($event)">
-                        <option v-for="device in inputDevices" 
-                            :value="device.deviceId" 
-                            :selected="device.deviceId === config.audioInput">
-                            {{device.label}}
-                        </option>
-                    </select> -->
-                </template>
-            </div>
+    <TopBar />
+    <section class="container-fluid full-vh d-flex flex-column">
+
+      <!-- Optional Top Row -->
+      <div class="row justify-content-center align-content-center shadow" style="height: 15%; background-color: var(--mpai-theme);">
+        <!-- Header content if needed -->
+      </div>
+
+      <!-- 2x2 Grid Content -->
+      <div class="row flex-grow-1">
+
+        <!-- Top-Left Cell -->
+        <div class="col-md-6 d-flex flex-column justify-content-center p-4 bg-black">
+          <h1 class="ms-3 text-white">We can't hear you!</h1>
+          <p class="ms-3 text-white">Please enable your microphone so that we can hear you out</p>
         </div>
-        <BottomBar @continue-click="nextClick()" :isContinueEnabled="hasGrantedPermission" />
+
+        <!-- Top-Right Cell -->
+        <div class="col-md-6 d-flex flex-column align-items-center justify-content-start p-4">
+          <template v-if="hasGrantedPermission">
+            <canvas 
+              id="analyser" 
+              style="background-color: lightgray;" 
+              :ref="analyserVisibilityChanged">
+            </canvas>
+
+            <h2 class="fs-6 mb-0 mt-3">Choose a Microphone</h2>
+            <ul class="list-group w-100">
+              <li class="list-group-item" v-for="device in inputDevices" :key="device.deviceId">
+                <input 
+                  class="form-check-input me-1" 
+                  type="radio"
+                  :checked="device.deviceId === config.audioInput"
+                  @change="audioInputChanged(device.deviceId)"
+                  :value="device.deviceId"
+                  :id="'audioinputcb-' + device.deviceId">
+                <label 
+                  class="form-check-label" 
+                  :for="'audioinputcb-' + device.deviceId">
+                  {{ device.label }}
+                </label>
+              </li>
+            </ul>
+          </template>
+        </div>
+
+        <!-- Bottom-Left Cell -->
+        <div class="col-md-6 d-flex justify-content-center align-items-center p-4 bg-black">
+          <a 
+            class="btn btn-secondary"
+            @click="getMicPermission()"
+            :class="{ 'd-none': hasGrantedPermission }">
+            Grant microphone permission
+          </a>
+          </a>
+        </div>
+
+        <!-- Bottom-Right Cell -->
+        <div class="col-md-6 d-flex justify-content-center align-items-center p-4">
+          <BottomBar 
+            @continue-click="nextClick()" 
+            :isContinueEnabled="hasGrantedPermission" 
+          />
+        </div>
+      </div>
+    </section>
+
+
+        
     `,
   methods: {
     prevClicked() {
       this.$router.replace("/");
     },
     nextClick() {
-      const target = this.$route.query.redirectTo || "playground-explanation";
+      const target = this.$route.query.redirectTo;
       if (this.$route.redirectedFrom) {
         this.$router.push(this.$route.redirectedFrom);
-      } else {
+      } else if (target && this.$router.hasRoute(target)) {
         this.$router.push({ name: target });
+      } else {
+        this.$router.push({ name: "playground-explanation" });
       }
     },
     analyserVisibilityChanged(element) {
@@ -92,7 +133,7 @@ export default {
             : this.inputDevices[0]?.deviceId;
         }
       } catch (err) {
-        console.error("Mic init failed:", err); // erm, optional
+        console.error("Mic init failed:", err);
         this.hasGrantedPermission = false;
         config.hasMicPermission = false;
       }
@@ -113,3 +154,36 @@ export default {
   },
   mounted() {},
 };
+
+/**
+ * <TopBar/>
+        <div class="flex-grow-1 ">
+            <TikiMessage>
+                <template v-if="!hasGrantedPermission">Before we go on, I need to be able to hear you.</template>
+                <template v-if="hasGrantedPermission">Ka pai. Try saying something.</template>
+            </TikiMessage>
+            <p class="text-center" v-if="!hasGrantedPermission">Your microphone is used to listen to your pronunciation so analysis and comparison can happen. Your voice is processed on your device and no data is collected. If you are participating in one of our research studies, you can choose to record and send audio samples.</p>
+            <p class="text-center" v-if="hasGrantedPermission">If nothing is showing on the monitor when you say something, try changing the microphone below.</p>
+            <div class="mt-3 d-flex flex-column gap-2 col-lg-6 justify-content-center mx-auto">
+            <a class="btn btn-secondary" @click="getMicPermission()" :class="{'d-none': hasGrantedPermission}">Grant microphone permission</a>
+                <template v-if="hasGrantedPermission">
+                    <canvas id="analyser" style="background-color: lightgray;" :ref="analyserVisibilityChanged"></canvas>
+                    <h2 class="fs-6 mb-0 mt-3">Choose a Microphone</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item" v-for="device in inputDevices" >
+                            <input class="form-check-input me-1" type="radio" :checked="device.deviceId === config.audioInput" @change="audioInputChanged(device.deviceId)" :value="device.deviceId" :id="'audioinputcb-' + device.deviceId">
+                            <label class="form-check-label" :for="'audioinputcb-' + device.deviceId">{{device.label}}</label>
+                        </li>
+                    </ul>
+                    <!--<select @change="audioInputChanged($event)">
+                        <option v-for="device in inputDevices" 
+                            :value="device.deviceId" 
+                            :selected="device.deviceId === config.audioInput">
+                            {{device.label}}
+                        </option>
+                    </select> -->
+                </template>
+            </div>
+        </div>
+        <BottomBar @continue-click="nextClick()" :isContinueEnabled="hasGrantedPermission" />
+ */

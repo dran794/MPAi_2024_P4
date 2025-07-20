@@ -1,6 +1,47 @@
+import TopBar from "../components/TopBar.js";
+
 export default {
-    template: `
-      <div class="container text-center mt-5">
+  template: `
+    <TopBar />
+    <section class="container-fluid full-vh d-flex flex-column">
+
+      <!-- Middle Row (fills remaining space) -->
+      <div class="row flex-grow-1">
+        <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center .h-100" style="--dash-color-1: #2ecc71; --dash-color-2: #a8e6cf4d;">
+          <a @click="nextPageScience()">Science of Speaking</a>
+        </div>
+        <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center" style="--dash-color-1: #14532d; --dash-color-2: #bef264;">
+          <a @click="nextPagePlayground()">MPAi Playground</a>
+        </div>
+      </div>
+
+      <!-- Bottom Row -->
+      <div class="row justify-content-center align-content-center" style="height: 10%;">
+        <div class="col text-center">
+          <p>Acknowledgements</p>
+        </div>
+      </div>
+
+    </section>
+  `,
+  methods: {
+    goTo(path) {
+      this.$router.push(path);
+    },
+    nextPageScience() {
+      this.$router.push({ name: "science-of-speaking" });
+    },
+    nextPagePlayground() {
+      this.$router.push({
+        name: "audiopermission",
+        query: { redirectTo: "test-playground" },
+      });
+    },
+  },
+};
+
+/**
+   *  <div class="container text-center mt-5">
         <h2 class="mb-4">Choose a Page</h2>
         <div class="d-grid gap-3">
           <button class="btn one" @click="goTo('/test-playground')">Test Playground</button>
@@ -10,11 +51,6 @@ export default {
           <button class="btn five" @click="goTo('/finish')">Activity 5</button>
         </div>
       </div>
-    `,
-    methods: {
-      goTo(path) {
-        this.$router.push(path);
-      }
-    }
-  };
-  
+   * 
+   * 
+   */

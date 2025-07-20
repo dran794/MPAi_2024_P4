@@ -29,33 +29,13 @@ export default {
       <!-- Right Column: Fully Centered -->
       <div class="col-lg-6 d-flex align-items-center justify-content-center">
         <div class="buttons">
-          <a href="#" class="dashing-fill" style="text-size:36px;">Begin</a>
-    <!-- Header -->
-    <!-- Change on scroll -->
-    <NavigationMenu :speakerOptionEnabled="false" />
-
-    <header class="d-flex flex-row-reverse py-3 h-20">
-      <p> Acknowledgements </p>
-    </header>
-
-    <!-- Title Page -->
-    <!-- Change on scroll -->
-    <div>
-      <h1 class="text-center">MPAi</h1>
-      <p class="text-center"> Māori Pronunciation Aid</p>
-    </div>
-
-    <!-- Two Columns -->
-    <div class="container px-4">
-      <div class="row gx-5">
-        <div class="text-center col">
-        <button class="p-3 border bg-light" @click="nextPageScience()">Science of Speaking</button>
-        </div>
-        <div class="text-center col">
-        <button class="p-3 border bg-light" @click="nextPagePlayground()">MPAi Playground</button>
+          <a class="dashing-fill" style="text-size:36px;" @click="nextPage()">Begin</a>
         </div>
       </div>
 
+    </div>
+    <div class="row-lg d-flex align-items-center justify-content-center py-4">
+      <p>Learn More Below</p>
     </div>
   </div>
 </section>
@@ -64,7 +44,7 @@ export default {
 
 
       <!-- Science of Speaking / MPAi Playground -->
-      <div class="container-fluid" style="margin-top: 100px; min-height: 75vh;">
+      <div class="container-fluid centered" style="margin-top: 100px; min-height: 75vh;">
         <div class="row gx-5 h-100">
           <div class="col d-flex justify-content-center align-items-center">
             <button class="p-3 rounded-3 border border-danger w-100 bg-danger fs-2 fw-bolder text-white" 
@@ -137,15 +117,10 @@ export default {
   },
 
   methods: {
-    nextPageScience() {
-      this.$router.push({ name: "science-of-speaking" });
-    },
-    nextPagePlayground() {
+    nextPage() {
       this.$router.push({
-        name: "audiopermission",
-        query: { redirectTo: "menu" },
+        name: "menu"
       });
-      this.$router.push({ name: "science-of-speaking" });
-    },
-  },
+    }
+  }
 };

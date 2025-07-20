@@ -12,6 +12,8 @@
   /* --mpai-color-s: 
   --mpai-color-p:
   --mpai-color-a: */
+  --sidebar-width: 280px;
+  --sidebar-width-collapsed: 80px;
   --mpai-red:#A72C1E;
   --mpai-orange:#B86D21;
   
@@ -25,14 +27,20 @@
   --small-text: 14px/28px var(--ff);
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 /* Elements */
 
 
-body {
-  height: auto;
-  width: 100%;
-  margin: 20px auto;
-  max-width: 75%;
+html,body {
+  height: 100%;
+  margin: 0;
+  max-width: 100%;
   background-color: var(--mpai-theme-background);
   overflow-x: hidden;
   overflow-y: auto;
@@ -192,8 +200,12 @@ canvas {
   color: #c24f24 !important;
 }
 
-.full-height-row {
-  min-height: 70vh; /* or 100vh if you want full screen */
+.full-vh {
+  min-height: 100vh; /* or 100vh if you want full screen */
+}
+
+.fill-row {
+  height: 100%;
 }
 
 .content {
@@ -213,6 +225,10 @@ canvas {
   padding: 0;
   overflow-x: hidden; /* ✅ still prevent horizontal overflow */
   z-index: 0;
+}
+
+.centered {
+  width: 80%;
 }
 
 .element:hover{scale: 1.05;}
@@ -266,10 +282,10 @@ canvas {
   color: #fff;
   background: linear-gradient(
     270deg,
-    var(--mpai-red),
-    var(--mpai-orange),
-    var(--mpai-red),
-    var(--mpai-orange)
+    var(--dash-color-1, var(--mpai-red)),
+    var(--dash-color-2, var(--mpai-orange)),
+    var(--dash-color-1, var(--mpai-red)),
+    var(--dash-color-2, var(--mpai-orange))
   );
   background-size: 300% 300%;
   animation: bg 10s ease-in-out infinite;
@@ -291,4 +307,115 @@ canvas {
 .small-text {
   font: var(--small-text);
   color: hsl(0, 0%, 60%);
+}
+
+.dropdown-btn{
+
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: linear-gradient(135deg, #1a1c2e 0%, #16181f 100%);
+    transition: all 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-width-collapsed);
+}
+
+.sidebar-link {
+    color: #a0a3bd;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 4px 16px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar-link.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.logo-text {
+    background: linear-gradient(45deg, #6b8cff, #8b9fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.3s ease;
+}
+
+.notification-badge {
+    background: #ff6b6b;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+}
+
+.profile-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.collapsed~.main-content {
+    margin-left: var(--sidebar-width-collapsed);
+}
+
+.toggle-btn {
+    position: absolute;
+    right: -15px;
+    top: 20px;
+    background: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.collapsed .toggle-btn {
+    transform: rotate(180deg);
+}
+
+.collapsed .hide-on-collapse {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.collapsed .logo-text {
+    opacity: 0;
+}
+
+.collapsed .profile-info {
+    opacity: 0;
+}
+
+.collapsed .sidebar-link {
+    text-align: center;
+    padding: 1rem !important;
+    margin: 4px 8px;
+}
+
+.collapsed .sidebar-link i {
+    margin: 0 !important;
+}
+
+.profile-info {
+    transition: opacity 0.2s ease;
 }

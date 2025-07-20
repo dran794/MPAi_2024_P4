@@ -1,8 +1,38 @@
 export default {
   template: `
-    <div class="position-fixed top-0 start-0 w-100 bg-charcoal shadow p-3 text-center text-white" style="z-index: 9999;">
-      <h1 class="m-0" @click="menuClick">MPAi</h1>
+  <div class="position-fixed container-fluid justify-content-center align-items-center w-100" style="height: 15%; background-color: var(--mpai-theme-dark);">
+    <div class="row" style="height: 100%">
+      <div class="col-2 d-flex justify-content-center align-items-center">
+        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">Sidebar</a>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+          </div>
+          <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+              Dropdown button
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+        </div>
+        </div>
+        </div>
+      <div class="col-8 d-flex justify-content-center align-items-center">
+        <h1 class="text-white mb-0">MPAi</h1>
+      </div>
+      <div class="col-2"></div>
     </div>
+  </div>
+
   `,
 
   methods: {

@@ -53,10 +53,10 @@ var timelineElement;
 //     colorway : ['#a4c2f4', '#ea9999', '#f3cec9', '#ffd966']
 // }
 
-function hzToBark(freqHz) {
-  var bark = 26.81 / (1 + 1960 / freqHz) - 0.53; //#((26.81 * freqHz)/(1960 + freqHz)) - 0.53 #using Traunmüller1990
-  return bark;
-}
+// function hzToBark(freqHz) {
+//   var bark = 26.81 / (1 + 1960 / freqHz) - 0.53; //#((26.81 * freqHz)/(1960 + freqHz)) - 0.53 #using Traunmüller1990
+//   return bark;
+// }
 
 export function initialiseTimeline(timelineEl) {
   timelineElement = timelineEl;

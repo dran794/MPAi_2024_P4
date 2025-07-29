@@ -19,17 +19,16 @@ export default {
       graphDisplayed: "dotplot",
       isRecording: false,
       isTimelineInitialised: false,
+      tongueMesh: null,
     };
   },
   components: { TopBar, TikiMessage, BottomBar },
   template: `
-
     <div class="container my-3">
       <div class="row">
         <div class="col">
               <a class="p-3 border bg-light d-inline-block" @click="prevPage()" style="cursor:pointer;">Back</a>
         </div>
-
         <div class="col">
           <h1 class="text-center">Test Playground</h1>
         </div>
@@ -38,12 +37,11 @@ export default {
 
     <div class="container py-5">
       <div class="row align-items-start">
-        <!-- The letters for pronunciation -->
+        <!-- Replaces the static image with 3D model -->
         <div class="col-6">
-          <!-- Test Image goes here -->
-          <img src="images/test_image.png" alt="description" width="300" height="300">
+          <div id="three-container" style="width: 100%; height: 300px;"></div>
         </div>
-        <!-- The graph area, on the same row as the word list -->
+        <!-- The graph area -->
         <div class="col-6">
           <div class="d-lg-flex flex-column flex-grow-1">
             <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
@@ -68,36 +66,6 @@ export default {
   methods: {
     prevPage() {
       this.$router.push({ name: "welcome" });
-    },
-    aaClick() {
-      this.$router.push({ name: "audiopermission" , query: { redirectTo: "taa-record" } });
-    },
-    aClick() {
-      this.$router.push({ name: "ta-record" });
-    },
-    oClick() {
-      this.$router.push({ name: "to-record" });
-    },
-    eClick() {
-      this.$router.push({ name: "te-record" });
-    },
-    uClick() {
-      this.$router.push({ name: "tu-record" });
-    },
-    aeClick() {
-      this.$router.push({ name: "tae-record" });
-    },
-    euClick() {
-      this.$router.push({ name: "teu-record" });
-    },
-    aiClick() {
-      this.$router.push({ name: "tai-record" });
-    },
-    auClick() {
-      this.$router.push({ name: "tau-record" });
-    },
-    nextClick() {
-      this.$router.push({ name: "model-speaker" });
     },
     handleRecordPressed() {
       console.log("Record button pressed");
@@ -127,18 +95,58 @@ export default {
         stopRecording();
       }
     },
-
     changeDisplayedGraph(graphName) {
       this.graphDisplayed = graphName;
-      // Trigger plotly's responsive handler to resize graphs to fit.
       this.$nextTick(function () {
-        // Initialise timeline
         if (graphName === "timeline" && !this.isTimelineInitialised) {
           initialiseTimeline(this.$refs.timeline);
           this.isTimelineInitialised = true;
         }
         window.dispatchEvent(new Event("resize"));
       });
+    },
+    updateTongueModel(f1, f2) {
+      if (!this.tongueMesh || !this.tongueMesh.morphTargetInfluences) return;
+      const openness = THREE.MathUtils.clamp((f1 - 2) / 7, 0, 1);
+      const frontness = THREE.MathUtils.clamp((f2 - 5.5) / 11, 0, 1);
+      this.tongueMesh.morphTargetInfluences[0] = openness; // Shape key: Open
+      this.tongueMesh.morphTargetInfluences[1] = frontness; // Shape key: Front
+    },
+    initThreeModel() {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(300, 300);
+      document
+        .getElementById("three-container")
+        .appendChild(renderer.domElement);
+
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(1, 1, 1).normalize();
+      scene.add(light);
+
+      // Load face.glb model
+      const loader = new GLTFLoader();
+      loader.load(
+        "/assets/face.glb",
+        (gltf) => {
+          const model = gltf.scene;
+          this.tongueMesh = model.getObjectByName("Tongue"); // Optional: rename in Blender if needed
+          scene.add(model);
+        },
+        undefined,
+        (error) => {
+          console.error("Failed to load model:", error);
+        }
+      );
+
+      camera.position.z = 2;
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      };
+      animate();
     },
   },
 
@@ -149,12 +157,8 @@ export default {
       (r) => r.length == "long" && r.speaker == gender
     );
     initScatterplot(this.$refs.dotplot);
-    // updateFormantEllipses(this.$refs.dotplot, formants, this.vowel);
     updateAnnotations(this.$refs.dotplot, this.config.language);
-    // When initialising a plotly graph set to autosize, if the graph is not visible, it will be set to 450px.
-    // On mobile view, timeline is hidden by default so it will be set to 450px, and thus larger than viewport.
-    // This bit of logic checks if the timeline is visible (i.e. on a larger screen). If it is, initialise it. Otherwise,
-    // wait until it is visible to initialise it.
+
     const isTimelineVisible =
       window
         .getComputedStyle(this.$refs.timeline)
@@ -163,9 +167,12 @@ export default {
       initialiseTimeline(this.$refs.timeline);
       this.isTimelineInitialised = true;
     }
+    this.initThreeModel();
+    window.vueRef = this;
     window.addEventListener("keydown", this.handleSpacePressed);
     window.addEventListener("keyup", this.handleSpaceReleased);
   },
+
   unmounted() {
     window.removeEventListener("keydown", this.handleSpacePressed);
     window.removeEventListener("keyup", this.handleSpaceReleased);

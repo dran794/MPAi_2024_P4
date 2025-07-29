@@ -5,9 +5,42 @@
 
 
 :root {
+  --bg-dark: hsl(19 100% 1%);
+  --bg: hsl(27 100% 4%);
+  --bg-light: hsl(34 80% 7%);
+  --text: hsl(34 100% 90%);
+  --text-muted: hsl(34 43% 65%);
+  --highlight: hsl(35 41% 34%);
+  --border: hsl(36 61% 23%);
+  --border-muted: hsl(38 100% 12%);
+  --primary: hsl(35 59% 62%);
+  --secondary: hsl(213 78% 73%);
+  --danger: hsl(9 37% 65%);
+  --warning: hsl(52 26% 54%);
+  --success: hsl(147 24% 57%);
+  --info: hsl(217 40% 66%);
+}
+body.light {
+  --bg-dark: hsl(34 62% 88%);
+  --bg: hsl(34 100% 93%);
+  --bg-light: hsl(34 100% 98%);
+  --text: hsl(17 100% 4%);
+  --text-muted: hsl(36 61% 23%);
+  --highlight: hsl(34 100% 96%);
+  --border: hsl(34 31% 46%);
+  --border-muted: hsl(34 35% 58%);
+  --primary: hsl(40 100% 16%);
+  --secondary: hsl(212 64% 30%);
+  --danger: hsl(9 28% 41%);
+  --warning: hsl(51 36% 31%);
+  --success: hsl(149 30% 34%);
+  --info: hsl(217 30% 42%);
+}
+
+:root {
   --ff: "Playfair Display";/*, "Merriweather", serif /* Fall back into san-serif if unable to load primary option */
   --bs-btn-bg: #366024;
-  --mpai-theme-background: #FCF8E8;
+  --mpai-theme-background: #FFF;
   --mpai-theme-dark: #121211;
   /* --mpai-color-s: 
   --mpai-color-p:
@@ -25,6 +58,7 @@
   --p1: 24px/30px var(--ff);
   --p2: 36px/48px var(--ff);
   --small-text: 14px/28px var(--ff);
+  --li: 14px/18px var(--ff);
 }
 
 * {
@@ -46,10 +80,11 @@ html,body {
   overflow-y: auto;
 }
 
-h1 {font: var(--h1);}
-h2 {font: var(--h2);}
-h3 {font: var(--h3);}
-p {font: var(--p);}
+h1 {color: var(--text); font: var(--h1);}
+h2 {color: var(--text);font: var(--h2);}
+h3 {color: var(--text);font: var(--h3);}
+p, span {color: var(--text-muted);font: var(--p);}
+li{font: var(--li);}
 
 canvas {
   display: inline-block;
@@ -147,6 +182,18 @@ canvas {
   width: 100%;
 }
 
+#menu-icon,
+#menu-icon-close {
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.rotated {
+  transform: rotate(90deg);
+}
+
+
+
 #record {
   border-radius: 50%;
   width: 100px;
@@ -155,6 +202,11 @@ canvas {
 }
 
 /* Classes */
+
+.welcome-section {
+  height: 92vh; 
+  background-color: var(--bg-dark);
+};
 
 .wrapper {
   min-height: 95vh;
@@ -166,38 +218,6 @@ canvas {
 .form-select {
   display: inline-block;
   max-width: 100px;
-}
-
-.bg-burnt-orange {
-  background-color: #c24f24 !important;
-}
-.bg-charcoal {
-  background-color: #3b2d2c !important;
-}
-.bg-cream {
-  background-color: #e6d8b2 !important;
-}
-.bg-kraft {
-  background-color: #927c5a !important;
-}
-.bg-beige {
-  background-color: #e4c8a1 !important;
-}
-.bg-clay {
-  background-color: #a5432c !important;
-}
-.bg-navy {
-  background-color: #262628 !important;
-}
-.bg-greybrown {
-  background-color: #7c6e5d !important;
-}
-.bg-offwhite {
-  background-color: #faf4e5 !important;
-}
-
-.text-burnt-orange {
-  color: #c24f24 !important;
 }
 
 .full-vh {
@@ -254,6 +274,26 @@ canvas {
     height: 100%;
   }
 }
+#plot {
+  width: 50vh;
+  max-width: 100vw;
+  height: 50vh;
+  text-align: center;
+  margin: auto;
+  margin-top: 10px;
+  border: 1px solid black;
+}
+
+.formant-plot {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 1rem;
+  margin: 2rem auto;
+  width: 90vw;
+  height: 60vh;
+}
+
 
 .buttons {
   display: flex;
@@ -418,4 +458,39 @@ canvas {
 
 .profile-info {
     transition: opacity 0.2s ease;
+}
+
+.pointer {cursor: pointer;}
+
+.dual-button {
+  display: flex;
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dual-button .btn {
+  border-radius: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.short-btn {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.short-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.long-btn {
+  background-color: white;
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+}
+
+.long-btn:hover {
+  background-color: #e7f1ff;
 }

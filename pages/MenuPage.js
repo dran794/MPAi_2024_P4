@@ -1,28 +1,26 @@
 import TopBar from "../components/TopBar.js";
+import BottomBar from "../components/BottomBar.js";
 
 export default {
+  components: { TopBar, BottomBar },
   template: `
     <TopBar />
+    
     <section class="container-fluid full-vh d-flex flex-column">
 
+      <div class="row" style="height: 15vh;"></div>
       <!-- Middle Row (fills remaining space) -->
       <div class="row flex-grow-1">
-        <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center .h-100" style="--dash-color-1: #2ecc71; --dash-color-2: #a8e6cf4d;">
-          <a @click="nextPageScience()">Science of Speaking</a>
+        <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center .h-100 pointer" style="--dash-color-1: #2ecc71; --dash-color-2: #a8e6cf4d;"  @click="nextPageScience()">
+          <a>Science of Speaking</a>
         </div>
-        <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center" style="--dash-color-1: #14532d; --dash-color-2: #bef264;">
-          <a @click="nextPagePlayground()">MPAi Playground</a>
-        </div>
-      </div>
-
-      <!-- Bottom Row -->
-      <div class="row justify-content-center align-content-center" style="height: 10%;">
-        <div class="col text-center">
-          <p>Acknowledgements</p>
+        <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center pointer" style="--dash-color-1: #14532d; --dash-color-2: #bef264;" @click="nextPagePlayground()">
+          <a>MPAi Playground</a>
         </div>
       </div>
-
     </section>
+
+    <BottomBar />
   `,
   methods: {
     goTo(path) {

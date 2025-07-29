@@ -2,7 +2,6 @@ import "https://cdn.plot.ly/plotly-basic-2.35.1.min.js";
 import "./forest.js";
 import "./ksvF0.js";
 import "./recorder.js";
-import { rememberMicPermission } from "./store.js";
 // Extracted audio code from main.js.
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -30,33 +29,33 @@ var traces = [];
 var layout = {};
 var scatterplotElement;
 var timelineElement;
-// const timelineLayout = {
-//     dragmode: false,
-//     xaxis: {
-//         title: "Time (s)",
-//         minallowed: 0
-//     },
-//     yaxis: {
-//         showgrid: false,
-//         title: "Bark scale frequency",
-//         range: [1, 24]
-//     },
-//     autosize: true,
-//     hovermode: "x",
-//     plot_bgcolor: '#faffee',
-//     margin: {
-//         l: 50,
-//         r: 50,
-//         b: 50,
-//         t: 20,
-//     },
-//     colorway : ['#a4c2f4', '#ea9999', '#f3cec9', '#ffd966']
-// }
+const timelineLayout = {
+  dragmode: false,
+  xaxis: {
+    title: "Time (s)",
+    minallowed: 0,
+  },
+  yaxis: {
+    showgrid: false,
+    title: "Bark scale frequency",
+    range: [1, 24],
+  },
+  autosize: true,
+  hovermode: "x",
+  plot_bgcolor: "#faffee",
+  margin: {
+    l: 50,
+    r: 50,
+    b: 50,
+    t: 20,
+  },
+  colorway: ["#a4c2f4", "#ea9999", "#f3cec9", "#ffd966"],
+};
 
-// function hzToBark(freqHz) {
-//   var bark = 26.81 / (1 + 1960 / freqHz) - 0.53; //#((26.81 * freqHz)/(1960 + freqHz)) - 0.53 #using Traunmüller1990
-//   return bark;
-// }
+function hzToBark(freqHz) {
+  var bark = 26.81 / (1 + 1960 / freqHz) - 0.53; //#((26.81 * freqHz)/(1960 + freqHz)) - 0.53 #using Traunmüller1990
+  return bark;
+}
 
 export function initialiseTimeline(timelineEl) {
   timelineElement = timelineEl;
@@ -80,7 +79,7 @@ export function initScatterplot(plotElement) {
   scatterplotElement = plotElement;
 
   layout = {
-    plot_bgcolor: "#fafafa",
+    plot_bgcolor: "#faffee",
     annotations: [
       {
         xref: "paper",
@@ -154,7 +153,6 @@ export function initScatterplot(plotElement) {
       b: 50,
       t: 20,
     },
-    height: 600, // pixels
     showlegend: false,
   };
   Plotly.newPlot(plotElement, null, layout, {
@@ -217,14 +215,13 @@ export function updateAnnotations(plotElement, lang) {
 }
 
 /**
- * Evaluates the formant ellipses which shows the general area of the formants,
- * and updates the plot with them.
+ * Used to generate the arrays that are shown on the plots
+ *
  *
  * @param {*} plotElement
  * @param {*} formants
  * @param {*} highlightedVowel
  */
-
 export function updateFormantEllipses(plotElement, formants, highlightedVowel) {
   const shapes = formants.flatMap((f) =>
     createFormantShape(
@@ -368,68 +365,19 @@ export function updateInputSource(inputId) {
  *
  * @returns {Promise<MediaStream>} A Promise of media stream
  */
-
-// audio.js (or whatever module)
-let micStream = null; // the actual MediaStream
-let initPromise = null; // a singleton Promise
-
 export function initAudio() {
-  // If we've already kicked off the request, just return the same promise.
-  if (initPromise) return initPromise;
-
-  // First call: build the promise and save it.
-  initPromise = (async () => {
-    // One-off setup code (event listeners, Plotly resize etc.)
-    setupOnce();
-
-    // Ask for the mic only the first time:
-    micStream = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        autoGainControl: true,
-        echoCancellation: true,
-        noiseSuppression: true,
-      },
-    });
-    rememberMicPermission();
-    await gotStream(micStream); // your existing handler
-    return micStream; // give the stream to callers
-  })().catch((err) => {
-    // Important: clear the cache on failure so you can retry later
-    initPromise = null;
-    micStream = null;
-    onError(err);
-    throw err;
-  });
-
-  return initPromise;
-}
-
-function setupOnce() {
-  // Add event listeners only the first time this file is imported
-  if (setupOnce.done) return;
-  setupOnce.done = true;
-
+  // function initAudio() {
+  // One-liner to resume playback when user interacted with the page.
   function resumePlayback() {
-    if (audioContext.state === "suspended") {
-      audioContext
-        .resume()
-        .then(() => console.log("Playback resumed successfully"));
-    }
+    if (audioContext.state == "suspended")
+      audioContext.resume().then(() => {
+        console.log("Playback resumed successfully");
+      });
   }
+
   window.addEventListener("mousedown", resumePlayback);
   window.addEventListener("keydown", resumePlayback);
   window.addEventListener("touchstart", resumePlayback);
-
-  window.addEventListener("resize", () => {
-    layout.height = window.innerHeight * 0.6;
-    Plotly.relayout(scatterplotElement, { height: layout.height });
-  });
-
-  // Tiny polyfill block, unchanged…
-  window.addEventListener("resize", () => {
-    layout.height = window.innerHeight * 0.6; // 60 % of viewport
-    Plotly.relayout(scatterplotElement, { height: layout.height });
-  });
 
   if (!navigator.cancelAnimationFrame)
     navigator.cancelAnimationFrame =
@@ -438,40 +386,17 @@ function setupOnce() {
     navigator.requestAnimationFrame =
       navigator.webkitRequestAnimationFrame ||
       navigator.mozRequestAnimationFrame;
+
+  const userMediaResult = navigator.mediaDevices.getUserMedia({
+    audio: {
+      autoGainControl: true,
+      echoCancellation: true,
+      noiseSuppression: true,
+    },
+  });
+  userMediaResult.then(gotStream, onError);
+  return userMediaResult;
 }
-// export function initAudio() {
-//     // function initAudio() {
-//     // One-liner to resume playback when user interacted with the page.
-//     function resumePlayback() {
-//         if (audioContext.state == 'suspended')
-//             audioContext.resume().then(() => {
-//                 console.log('Playback resumed successfully');
-//             });
-//     }
-
-//     window.addEventListener('mousedown', resumePlayback);
-//     window.addEventListener('keydown', resumePlayback);
-//     window.addEventListener('touchstart', resumePlayback);
-//     window.addEventListener('resize', () => {
-//         layout.height = window.innerHeight * 0.6; // 60 % of viewport
-//         Plotly.relayout(scatterplotElement, { height: layout.height });
-//     });
-
-//     if (!navigator.cancelAnimationFrame)
-//         navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
-//     if (!navigator.requestAnimationFrame)
-//         navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
-
-//     const userMediaResult = navigator.mediaDevices.getUserMedia({
-//         audio: {
-//             autoGainControl: true,
-//             echoCancellation: true,
-//             noiseSuppression: true
-//         }
-//     });
-//     userMediaResult.then(gotStream, onError);
-//     return userMediaResult;
-// }
 
 export function startRecording() {
   // function startRecording() {

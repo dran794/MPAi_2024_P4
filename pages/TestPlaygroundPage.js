@@ -24,97 +24,16 @@ export default {
   components: { TopBar, TikiMessage, BottomBar },
   template: `
 <!-- Link to your custom stylesheet -->
-<link rel="stylesheet" href="style.css">
 
 <TopBar/>
 
-<!-- Main background container -->
-<div>
-<section class="container-fluid full-vh d-flex">
-  <!-- Header Gap-->
-  <div class="row" style="height: 15%;"></div>
-  
-  <!-- Main Content -->
-  <div class="container-fluid vh-100">
-    <div class="row h-100">
-
-      <!-- Left Column: Vowel Grid -->
-      <div class="col-md-6 d-flex align-items-center justify-content-center">
-        <div class="row row-cols-2 row-cols-md-2 g-4 text-center">
-          <div class="col"><h3>a</h3></div>
-          <div class="col"><h3>e</h3></div>
-          <div class="col"><h3>i</h3></div>
-          <div class="col"><h3>o</h3></div>
-          <div class="col"><h3>u</h3></div>
-          <div class="col"><h3>ā</h3></div>
-          <div class="col"><h3>ē</h3></div>
-          <div class="col"><h3>ī</h3></div>
-          <div class="col"><h3>ō</h3></div>
-          <div class="col"><h3>ū</h3></div>
-
-        </div>
-      </div>
-
-      <!-- Right Column: Chart (to be added) -->
-      <div class="col-md-6 d-flex align-items-center justify-content-center">
-        <!-- Chart will go here -->
-        <!-- <canvas id="vowelChart"></canvas> -->
-      </div>
-
-    </div>
-  </div>
-
-
-  <div class="row" style="height: 10%;"></div>
-</section>
-
-  
-
-
-
-
-
-
-
-
-<!-- Header row -->
-  <div class="container my-3">
-    <div class="row">
-      <div class="col">
-        <a class="p-3 border bg-light d-inline-block" @click="prevPage()" style="cursor:pointer;">Back</a>
-      </div>
-      <div class="col">
-        <h1 class="text-center">Test Playground</h1>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main content row -->
-  <div class="container py-5">
-    <div class="row align-items-stretch full-height-row">
-      
-      <!-- Left column (letter buttons) -->
-      <div class="col-4 d-flex flex-column justify-content-center align-items-center h-100">
-        <div class="d-flex flex-column justify-content-between align-items-center h-100">
-          <div class="row row-cols-2 g-3">
-            <div span class="col"><button class="btn flex-row btn-danger fw-bold" @click="aaClick">ā</button></div>
-            <div span class="col"><button class="btn btn-danger fw-bold" @click="ooClick">ō</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="aClick">a</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="oClick">o</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="eClick">e</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="uClick">u</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="aeClick">ae</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="euClick">eu</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="aiClick">ai</button></div>
-            <div class="col"><button class="btn btn-danger fw-bold" @click="auClick">au</button></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right column (graph + record button) -->
-      <div class="col-8 d-flex flex-column justify-content-between h-100">
+<div class="container-fluid full-vh flex-column">
+  <div class="row" style="height:15%;"></div>
+  <div class="row my-5 align-items-stretch">
+    <!-- Right column (graph + record button) -->
+      <div class="col d-flex flex-column justify-content-between h-85">
         <div class="d-lg-flex flex-column flex-grow-1">
-          <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
+          <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'heatmap'}" ref="dotplot"></div>
         </div>
         <div class="text-center my-3">
           <button 
@@ -127,12 +46,46 @@ export default {
             class="btn btn-primary">
             <i class="bi bi-mic"></i> Record
           </button>
+          <div class="text-center my-2">
+  <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
+  <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
+</div>
         </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="btn-toolbar justify-content-center align-items-center d-flex" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group me-2" role="group" aria-label="a">
+        <button type="button" class="btn btn-primary">a</button>
+        <button type="button" class="btn btn-primary" @click="aaClick()">ā</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="e">
+        <button type="button" class="btn btn-primary">e</button>
+        <button type="button" class="btn btn-primary">ē</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="i">
+        <button type="button" class="btn btn-primary">i</button>
+        <button type="button" class="btn btn-primary">ī</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="o">
+        <button type="button" class="btn btn-primary">o</button>
+        <button type="button" class="btn btn-primary">ō</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="u">
+        <button type="button" class="btn btn-primary">u</button>
+        <button type="button" class="btn btn-primary">ū</button>
       </div>
 
     </div>
+
+
   </div>
+
 </div>
+
+
+  <div class="row" style="height: 10%;"></div>
+</section>
 
     `,
 
@@ -150,25 +103,22 @@ export default {
       this.$router.push({ name: "ta-record" });
     },
     oClick() {
-      this.$router.push({ name: "to-record" });
-    },
-    eClick() {
       this.$router.push({ name: "te-record" });
     },
-    uClick() {
-      this.$router.push({ name: "tu-record" });
+    eClick() {
+      this.$router.push({ name: "ti-record" });
     },
-    aeClick() {
-      this.$router.push({ name: "tae-record" });
+    uClick() {
+      this.$router.push({ name: "to-record" });
     },
     euClick() {
-      this.$router.push({ name: "teu-record" });
+      this.$router.push({ name: "hee-record" });
     },
     aiClick() {
-      this.$router.push({ name: "tai-record" });
+      this.$router.push({ name: "hii-record" });
     },
     auClick() {
-      this.$router.push({ name: "tau-record" });
+      this.$router.push({ name: "poo-record" });
     },
     nextClick() {
       this.$router.push({ name: "model-speaker" });
@@ -204,15 +154,72 @@ export default {
 
     changeDisplayedGraph(graphName) {
       this.graphDisplayed = graphName;
-      // Trigger plotly's responsive handler to resize graphs to fit.
-      this.$nextTick(function () {
-        // Initialise timeline
+
+      this.$nextTick(() => {
+        if (graphName === "dotplot") {
+          const allFormants = this.resources.speakerFormants;
+          const gender = this.config.modelSpeaker.gender;
+          const formants = allFormants.filter(
+            (r) => r.length == "long" && r.speaker == gender
+          );
+          initScatterplot(this.$refs.dotplot);
+          updateAnnotations(this.$refs.dotplot, this.config.language);
+          // Optionally show ellipses or bubbles
+          // updateFormantEllipses(this.$refs.dotplot, formants);
+        }
+
+        if (graphName === "heatmap") {
+          this.showFormantHeatmap();
+        }
+
         if (graphName === "timeline" && !this.isTimelineInitialised) {
           initialiseTimeline(this.$refs.timeline);
           this.isTimelineInitialised = true;
         }
+
         window.dispatchEvent(new Event("resize"));
       });
+    },
+    showFormantHeatmap() {
+      const allFormants = this.resources.speakerFormants;
+      const gender = this.config.modelSpeaker.gender;
+      const formants = allFormants.filter(
+        (r) => r.length == "long" && r.speaker == gender
+      );
+
+      // Example binning
+      const f1Bins = Array.from({ length: 15 }, (_, i) => 2.5 + i * 0.5); // Bark scale
+      const f2Bins = Array.from({ length: 15 }, (_, i) => 5.5 + i * 0.5);
+
+      const heatmapData = Array(f1Bins.length)
+        .fill()
+        .map(() => Array(f2Bins.length).fill(0));
+
+      formants.forEach((f) => {
+        const f1 = hzToBark(f.F1_mean);
+        const f2 = hzToBark(f.F2_mean);
+
+        const f1Idx = Math.floor((f1 - 2.5) / 0.5);
+        const f2Idx = Math.floor((f2 - 5.5) / 0.5);
+
+        if (heatmapData[f1Idx] && heatmapData[f1Idx][f2Idx] !== undefined) {
+          heatmapData[f1Idx][f2Idx] += 1;
+        }
+      });
+
+      const trace = {
+        x: f2Bins,
+        y: f1Bins,
+        z: heatmapData,
+        type: "heatmap",
+        colorscale: "YlOrRd",
+        hovertemplate: "F1: %{y}<br>F2: %{x}<br>Count: %{z}<extra></extra>",
+      };
+
+      const layoutCopy = { ...layout };
+      layoutCopy.title = "Formant Intensity Map";
+
+      Plotly.react(this.$refs.dotplot, [trace], layoutCopy);
     },
   },
 

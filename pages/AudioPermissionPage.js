@@ -12,8 +12,9 @@ export default {
     <section class="container-fluid full-vh d-flex flex-column">
 
       <!-- Optional Top Row -->
-      <div class="row justify-content-center align-content-center shadow" style="height: 15%; background-color: var(--mpai-theme);">
+      <div class="row justify-content-center align-content-center shadow" style="height: 15vh; background-color: var(--mpai-theme);">
         <!-- Header content if needed -->
+        Hi
       </div>
 
       <!-- 2x2 Grid Content -->
@@ -67,12 +68,27 @@ export default {
 
         <!-- Bottom-Right Cell -->
         <div class="col-md-6 d-flex justify-content-center align-items-center p-4">
-          <BottomBar 
-            @continue-click="nextClick()" 
-            :isContinueEnabled="hasGrantedPermission" 
-          />
-        </div>
+          <div class="d-grid col-12 col-lg-6 mx-auto mb-4">
+  <a
+    @click.prevent="nextClick"
+    id="btn-continue"
+    class="btn btn-primary"
+    :class="{ disabled: !isContinueEnabled || isLoadingNextPage }"
+    :aria-disabled="!isContinueEnabled || isLoadingNextPage"
+  >
+    <template v-if="!isLoadingNextPage">
+      Continue
+    </template>
+    <template v-else>
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span class="visually-hidden" role="status">Loading...</span>
+    </template>
+  </a>
+</div>
+
+  
       </div>
+      <BottomBar />
     </section>
 
 
@@ -89,7 +105,7 @@ export default {
       } else if (target && this.$router.hasRoute(target)) {
         this.$router.push({ name: target });
       } else {
-        this.$router.push({ name: "playground-explanation" });
+        this.$router.push({ name: "taa-record" });
       }
     },
     analyserVisibilityChanged(element) {
@@ -121,6 +137,7 @@ export default {
         await initAudio(); // returns cached promise if already done
         this.hasGrantedPermission = true;
         config.hasMicPermission = true;
+        this.isContinueEnabled = true;
 
         if (!this.inputDevices?.length) {
           const devices = await navigator.mediaDevices.enumerateDevices();

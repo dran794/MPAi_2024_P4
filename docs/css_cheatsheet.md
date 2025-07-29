@@ -103,3 +103,5 @@ parent{scroll-snap-type: y mandatory;} children{scroll-snap-align: start;}
 | `form-check`, `form-check-input`, `form-check-label` | Bootstrap radio/checkbox styling |
 | `list-group`, `list-group-item`                      | Styled vertical list             |
 | `form-control`                                       | Styled text/number input         |
+
+In this document, using a `section` means that the width is 100%.

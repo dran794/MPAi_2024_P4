@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Snap</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      main {
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+      }
+
+      section {
+        scroll-snap-align: start;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+      }
+
+      div {
+        height: 100vh;
+        scroll-snap-align: start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+      }
+
+      .section1 {
+        background: #ffc;
+      }
+      .section2 {
+        background: #ccf;
+        height: 200vh; /* changed from 100vh */
+      }
+      .section3 {
+        background: #cfc;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="section1">Section 1</section>
+      <div class="section2">Section 2</div>
+      <div class="section3">Section 3</div>
+    </main>
+  </body>
+</html>

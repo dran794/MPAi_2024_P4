@@ -1,0 +1,63 @@
+:root {
+  /* ===== Brand / Accent ===== */
+  --button-colour-start: hsl(0, 50, 45);
+  --button-colour-end: hsl(30, 70, 45);
+  --brand-divider: hsl(0, 50, 45); /* Divider for the title and content*/
+
+  /* ===== Neutrals ===== */
+  --neutral-100: hsl(40, 43, 95);
+  --neutral-300: hsl(/* light button bg */);
+  --neutral-600: hsl(/* medium gray text/icons */);
+  --neutral-800: hsl(/* dark surface/charcoal */);
+  --neutral-900: hsl(0,0,20);
+  --white: hsl(0, 0, 95);
+
+  /* ===== Semantic (Light theme defaults) ===== */
+  --bg: var(--neutral-100);
+  --surface: var(--neutral-200);
+  --elevated: var(--neutral-300);
+  --header: var(--neutral-900);
+  --text: hsl(/* primary body text on light */);
+  --text-muted: var(--neutral-600);
+  --text-inverse: var(--white);
+  --border: hsl(/* subtle border on light */);
+  --focus: hsl(/* focus ring outline */);
+
+  /* ===== Controls ===== */
+  --btn-bg: var(--brand-start);
+  --btn-bg-end: var(--brand-end); /* for gradient */
+  --btn-text: var(--white);
+  --chip-bg: var(--neutral-300);
+  --chip-text: var(--neutral-900);
+
+  /* ===== Status ===== */
+  --info: hsl(/* blue info bubble */);
+  --success: hsl(/* success green */);
+  --warning: hsl(/* amber */);
+  --danger: hsl(/* red for errors */);
+
+  /* ===== Shadows / Overlays ===== */
+  --shadow-color: hsl(/* shadow color for cards/buttons */ / 0.25);
+  --scrim: hsl(/* modal scrim */ / 0.55);
+
+  /* ===== Misc tokens used in UI ===== */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;        /* pill buttons */
+  --spacing: 8px;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+  --bg: var(--neutral-900);
+  --surface: var(--neutral-800);
+  --elevated: hsl(/* slightly lighter than surface */);
+  --header: var(--neutral-900);
+  --text: var(--white);
+  --text-muted: hsl(/* muted on dark */);
+  --text-inverse: var(--neutral-900);
+  --border: hsl(/* subtle border on dark */ / 0.35);
+
+  --chip-bg: hsl(/* dark chip background */);
+  --chip-text: var(--white);
+}

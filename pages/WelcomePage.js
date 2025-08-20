@@ -46,51 +46,52 @@ export default {
           </div>
 
       <!-- What We Do -->
-      <div class="container mb-5">
-        <div class="row mb-5">
-          <div class="col-lg-6">
-            <h1 style="color: var(--text-dark)">What We Do?</h1>
-            <p>
-              We analyze the formants and spectral features of spoken Māori to provide real-time feedback on:
-            </p>
-            <ul>
-              <li>Formant tracking</li>
-              <li>Visual feedback (e.g., vowel space plots)</li>
-              <li>Interactive pronunciation games</li>
-            </ul>
-          </div>
-          <div class="col-lg-6 p-0">
-            <img src="images/stock1.jpg" alt="Formant visualization" class="img-fluid w-100" style="object-fit: cover;" />
-          </div>
-        </div>
-      </div>
+<div class="container w-100 mb-5">
+  <div class="row mb-5 align-items-center">
+    <!-- Text first on small, left on large -->
+    <div class="col-12 col-lg-6 order-1 order-lg-1">
+      <h1 style="color: var(--text-dark)">What We Do?</h1>
+      <p>We analyze the formants and spectral features of spoken Māori to provide real-time feedback on:</p>
+      <ul>
+        <li>Formant tracking</li>
+        <li>Visual feedback (e.g., vowel space plots)</li>
+        <li>Interactive pronunciation games</li>
+      </ul>
+    </div>
 
-      <!-- Current Research -->
-      <div class="w-100 mb-5">
-        <div class="row g-0">
-          <div class="col-lg-6 p-0">
-            <img src="images/stock1.jpg" alt="Research visualization" class="img-fluid w-100" style="object-fit: cover;" />
-          </div>
-          <div class="col-lg-6 d-flex align-items-center text-end p-5">
-            <div>
-              <h1 style="color: var(--text-dark)">Current Research</h1>
-              <p>
-                Our research focuses on combining phonetics, speech processing, and HCI design to support language learning.
-                We are testing models of articulatory effort, perceptual mispronunciation detection, and UI feedback techniques that work well
-                with both fluent and beginner learners. Check out the main website to learn more:
-              </p>
-              <p>
-                <a href="https://speechresearch.auckland.ac.nz/" target="_blank">
-                  speechresearch.auckland.ac.nz
-                </a>
-              </p>
-              <p>
-                This includes collaborations with linguists, educators, and te reo Māori speakers.
-              </p>
-            </div>
-          </div>
-        </div>
+    <!-- Image second on small, right on large -->
+    <div class="col-12 col-lg-6 p-0 order-2 order-lg-2">
+      <img src="images/stock1.jpg" alt="Formant visualization" class="img-fluid w-100" style="object-fit: cover;" />
+    </div>
+  </div>
+</div>
+
+<!-- Current Research -->
+<div class="w-100 mb-5">
+  <div class="row g-0 align-items-center">
+    <!-- Image second on small, left on large -->
+    <div class="col-12 col-lg-6 p-0 order-2 order-lg-1">
+      <img src="images/stock1.jpg" alt="Research visualization" class="img-fluid w-100" style="object-fit: cover;" />
+    </div>
+
+    <!-- Text first on small, right on large -->
+    <div class="col-12 col-lg-6 d-flex align-items-center p-4 p-lg-5 order-1 order-lg-2 text-center text-lg-end">
+      <div class="w-100">
+        <h1 style="color: var(--text-dark)">Current Research</h1>
+        <p>
+          Our research focuses on combining phonetics, speech processing, and HCI design to support language learning.
+          We are testing models of articulatory effort, perceptual mispronunciation detection, and UI feedback techniques that work well
+          with both fluent and beginner learners. Check out the main website to learn more:
+        </p>
+        <p>
+          <a href="https://speechresearch.auckland.ac.nz/" target="_blank">speechresearch.auckland.ac.nz</a>
+        </p>
+        <p>This includes collaborations with linguists, educators, and te reo Māori speakers.</p>
       </div>
+    </div>
+  </div>
+</div>
+
 
       <!-- Footer -->
       <footer class="border bg-light p-3 text-center">

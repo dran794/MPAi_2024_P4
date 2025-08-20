@@ -23,8 +23,6 @@ export default {
   },
   components: { TopBar, TikiMessage, BottomBar },
   template: `
-<!-- Link to your custom stylesheet -->
-
 <TopBar/>
 
 <div class="container-fluid full-vh flex-column">

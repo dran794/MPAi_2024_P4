@@ -16,7 +16,7 @@ export default {
     return {
       config,
       resources,
-      graphDisplayed: "dotplot",
+      graphDisplayed: "dotplot", // 'dotplot' | 'heatmap' | 'timeline'
       isRecording: false,
       isTimelineInitialised: false,
       tongueMesh: null,
@@ -24,29 +24,45 @@ export default {
   },
   components: { TopBar, TikiMessage, BottomBar },
   template: `
-    <div class="container my-3">
-      <div class="row">
-        <div class="col">
-              <a class="p-3 border bg-light d-inline-block" @click="prevPage()" style="cursor:pointer;">Back</a>
-        </div>
-        <div class="col">
-          <h1 class="text-center">Test Playground</h1>
-        </div>
-      </div>
-    </div>
+    <TopBar/>
 
-    <div class="container py-5">
-      <div class="row align-items-start">
-        <!-- Replaces the static image with 3D model -->
-        <div class="col-6">
+    <!-- Main Content - full width -->
+    <div class="container-fluid full-vh d-flex flex-column">
+      <div class="row" style="height:15%;"></div>
+
+      <div class="row my-5 align-items-stretch">
+        <!-- Left column: 3D model -->
+        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
           <div id="three-container" style="width: 100%; height: 300px;"></div>
         </div>
-        <!-- The graph area -->
-        <div class="col-6">
+
+        <!-- Right column: graphs + controls -->
+        <div class="col-12 col-lg-6 d-flex flex-column justify-content-between h-85">
           <div class="d-lg-flex flex-column flex-grow-1">
-            <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'timeline'}" ref="dotplot"></div>
-            <div id="playground-timeline" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'dotplot'}" ref="timeline"></div>
+            <!-- Dotplot -->
+            <div id="playground-dotplot" class="d-lg-block js-plotly-plot"
+                 :class="{'d-none': graphDisplayed !== 'dotplot'}"
+                 ref="dotplot"></div>
+
+            <!-- Heatmap (if you wire it up later) -->
+            <div id="playground-heatmap" class="d-lg-block js-plotly-plot"
+                 :class="{'d-none': graphDisplayed !== 'heatmap'}"
+                 ref="heatmap"></div>
+
+            <!-- Timeline -->
+            <div id="playground-timeline" class="d-lg-block js-plotly-plot"
+                 :class="{'d-none': graphDisplayed !== 'timeline'}"
+                 ref="timeline"></div>
           </div>
+
+          <!-- View toggles -->
+          <div class="text-center my-2">
+            <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
+            <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
+            <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'timeline'}" @click="changeDisplayedGraph('timeline')">Timeline View</button>
+          </div>
+
+          <!-- Record controls -->
           <div class="text-center my-3">
             <button 
               id="record"
@@ -55,32 +71,31 @@ export default {
               @mouseup.prevent="handleRecordReleased"
               @touchend.prevent="handleRecordReleased"
               :class="{recording: isRecording}"
-              class="btn btn-primary"><i class="bi bi-mic"></i>Record
+              class="btn btn-primary">
+              <i class="bi bi-mic"></i> Record
             </button>
           </div>
         </div>
       </div>
+
+      <div class="row" style="height:10%;"></div>
     </div>
-    `,
+  `,
 
   methods: {
     prevPage() {
       this.$router.push({ name: "welcome" });
     },
     handleRecordPressed() {
-      console.log("Record button pressed");
       if (!this.isRecording) {
         this.isRecording = true;
         startRecording();
-        console.log("Recording started");
       }
     },
     handleRecordReleased() {
-      console.log("Record button released");
       if (this.isRecording) {
         this.isRecording = false;
         stopRecording();
-        console.log("Recording stopped");
       }
     },
     handleSpacePressed(event) {
@@ -97,8 +112,12 @@ export default {
     },
     changeDisplayedGraph(graphName) {
       this.graphDisplayed = graphName;
-      this.$nextTick(function () {
-        if (graphName === "timeline" && !this.isTimelineInitialised) {
+      this.$nextTick(() => {
+        if (
+          graphName === "timeline" &&
+          !this.isTimelineInitialised &&
+          this.$refs.timeline
+        ) {
           initialiseTimeline(this.$refs.timeline);
           this.isTimelineInitialised = true;
         }
@@ -121,17 +140,26 @@ export default {
         .getElementById("three-container")
         .appendChild(renderer.domElement);
 
-      const light = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set(1, 1, 1).normalize();
-      scene.add(light);
+      // --- Lighting: added ambient + hemisphere, kept directional
+      const amb = new THREE.AmbientLight(0xffffff, 0.35);
+      scene.add(amb);
+
+      const hemi = new THREE.HemisphereLight(0xffffff, 0x404040, 0.6);
+      hemi.position.set(0, 1, 0);
+      scene.add(hemi);
+
+      const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+      dir.position.set(1, 1, 1).normalize();
+      scene.add(dir);
+      // ---
 
       // Load face.glb model
       const loader = new GLTFLoader();
       loader.load(
-        "/assets/face.glb",
+        "../assets/face.glb",
         (gltf) => {
           const model = gltf.scene;
-          this.tongueMesh = model.getObjectByName("Tongue"); // Optional: rename in Blender if needed
+          this.tongueMesh = model.getObjectByName("Jaw"); // ensure this name in Blender
           scene.add(model);
         },
         undefined,
@@ -156,18 +184,25 @@ export default {
     const formants = allFormants.filter(
       (r) => r.length == "long" && r.speaker == gender
     );
-    initScatterplot(this.$refs.dotplot);
-    updateAnnotations(this.$refs.dotplot, this.config.language);
 
-    const isTimelineVisible =
-      window
-        .getComputedStyle(this.$refs.timeline)
-        .getPropertyValue("display") !== "none";
-    if (isTimelineVisible) {
-      initialiseTimeline(this.$refs.timeline);
-      this.isTimelineInitialised = true;
+    // Initialise dotplot first
+    if (this.$refs.dotplot) {
+      initScatterplot(this.$refs.dotplot);
+      updateAnnotations(this.$refs.dotplot, this.config.language);
     }
+
+    // If the timeline is visible by default, init it
+    if (this.$refs.timeline) {
+      const style = window.getComputedStyle(this.$refs.timeline);
+      const isTimelineVisible = style.getPropertyValue("display") !== "none";
+      if (isTimelineVisible && !this.isTimelineInitialised) {
+        initialiseTimeline(this.$refs.timeline);
+        this.isTimelineInitialised = true;
+      }
+    }
+
     this.initThreeModel();
+
     window.vueRef = this;
     window.addEventListener("keydown", this.handleSpacePressed);
     window.addEventListener("keyup", this.handleSpaceReleased);

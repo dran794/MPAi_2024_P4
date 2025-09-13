@@ -1,96 +1,41 @@
-import TopBar from "../components/TopBar.js";
-import BottomBar from "../components/BottomBar.js";
-import TikiMessage from "../components/TikiMessage.js";
+import Header from "../components/Header.js";
+import Footer from "../components/Footer.js";
+// import TikiMessage from "../components/TikiMessage.js";
 import { updateAnalysers, initAudio, updateInputSource } from "../audio.js";
 import { config, resources } from "../store.js";
 
 export default {
-  components: { TopBar, BottomBar, TikiMessage },
+  components: { Header, Footer },
 
   template: `
-    <TopBar />
-    <section class="container-fluid full-vh d-flex flex-column">
+  <Header />
 
-      <!-- Optional Top Row -->
-      <div class="row justify-content-center align-content-center shadow" style="height: 15vh; background-color: var(--mpai-theme);">
-        <!-- Header content if needed -->
-        Hi
-      </div>
+  <div class="container-fluid full-vh d-flex flex-column">
 
-      <!-- 2x2 Grid Content -->
-      <div class="row flex-grow-1">
-
-        <!-- Top-Left Cell -->
-        <div class="col-md-6 d-flex flex-column justify-content-center p-4 bg-black">
-          <h1 class="ms-3 text-white">We can't hear you!</h1>
-          <p class="ms-3 text-white">Please enable your microphone so that we can hear you out</p>
-        </div>
-
-        <!-- Top-Right Cell -->
-        <div class="col-md-6 d-flex flex-column align-items-center justify-content-start p-4">
-          <template v-if="hasGrantedPermission">
-            <canvas 
-              id="analyser" 
-              style="background-color: lightgray;" 
-              :ref="analyserVisibilityChanged">
-            </canvas>
-
-            <h2 class="fs-6 mb-0 mt-3">Choose a Microphone</h2>
-            <ul class="list-group w-100">
-              <li class="list-group-item" v-for="device in inputDevices" :key="device.deviceId">
-                <input 
-                  class="form-check-input me-1" 
-                  type="radio"
-                  :checked="device.deviceId === config.audioInput"
-                  @change="audioInputChanged(device.deviceId)"
-                  :value="device.deviceId"
-                  :id="'audioinputcb-' + device.deviceId">
-                <label 
-                  class="form-check-label" 
-                  :for="'audioinputcb-' + device.deviceId">
-                  {{ device.label }}
-                </label>
-              </li>
-            </ul>
-          </template>
-        </div>
-
-        <!-- Bottom-Left Cell -->
-        <div class="col-md-6 d-flex justify-content-center align-items-center p-4 bg-black">
-          <a 
-            class="btn btn-secondary"
-            @click="getMicPermission()"
-            :class="{ 'd-none': hasGrantedPermission }">
-            Grant microphone permission
-          </a>
-          </a>
-        </div>
-
-        <!-- Bottom-Right Cell -->
-        <div class="col-md-6 d-flex justify-content-center align-items-center p-4">
-          <div class="d-grid col-12 col-lg-6 mx-auto mb-4">
-  <a
-    @click.prevent="nextClick"
-    id="btn-continue"
-    class="btn btn-primary"
-    :class="{ disabled: !isContinueEnabled || isLoadingNextPage }"
-    :aria-disabled="!isContinueEnabled || isLoadingNextPage"
-  >
-    <template v-if="!isLoadingNextPage">
-      Continue
-    </template>
-    <template v-else>
-      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-      <span class="visually-hidden" role="status">Loading...</span>
-    </template>
-  </a>
-</div>
-
+    <!--Empty space for header-->
+    <div class="row" style="height: 15vh;"></div>
   
+    <!-- Main Content -->
+    <div class="row flex-grow-1">
+      
+      <!-- LHS -->
+      <div class="col-6">
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>      
       </div>
-      <BottomBar />
-    </section>
 
+      <!-- RHS -->
+      <div class="col-6">
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+      </div>
+    </div>
+  </div>
+
+  <Footer />
 
         
     `,
@@ -204,3 +149,89 @@ export default {
         </div>
         <BottomBar @continue-click="nextClick()" :isContinueEnabled="hasGrantedPermission" />
  */
+
+/*
+
+    <TopBar />
+    <section class="container-fluid full-vh d-flex flex-column">
+
+      <!-- Optional Top Row -->
+      <div class="row justify-content-center align-content-center shadow" style="height: 15vh; background-color: var(--mpai-theme);">
+        <!-- Header content if needed -->
+        Hi
+      </div>
+
+      <!-- 2x2 Grid Content -->
+      <div class="row flex-grow-1">
+
+        <!-- Top-Left Cell -->
+        <div class="col-md-6 d-flex flex-column justify-content-center p-4 bg-black">
+          <h1 class="ms-3 text-white">We can't hear you!</h1>
+          <p class="ms-3 text-white">Please enable your microphone so that we can hear you out</p>
+        </div>
+
+        <!-- Top-Right Cell -->
+        <div class="col-md-6 d-flex flex-column align-items-center justify-content-start p-4">
+          <template v-if="hasGrantedPermission">
+            <canvas 
+              id="analyser" 
+              style="background-color: lightgray;" 
+              :ref="analyserVisibilityChanged">
+            </canvas>
+
+            <h2 class="fs-6 mb-0 mt-3">Choose a Microphone</h2>
+            <ul class="list-group w-100">
+              <li class="list-group-item" v-for="device in inputDevices" :key="device.deviceId">
+                <input 
+                  class="form-check-input me-1" 
+                  type="radio"
+                  :checked="device.deviceId === config.audioInput"
+                  @change="audioInputChanged(device.deviceId)"
+                  :value="device.deviceId"
+                  :id="'audioinputcb-' + device.deviceId">
+                <label 
+                  class="form-check-label" 
+                  :for="'audioinputcb-' + device.deviceId">
+                  {{ device.label }}
+                </label>
+              </li>
+            </ul>
+          </template>
+        </div>
+
+        <!-- Bottom-Left Cell -->
+        <div class="col-md-6 d-flex justify-content-center align-items-center p-4 bg-black">
+          <a 
+            class="btn btn-secondary"
+            @click="getMicPermission()"
+            :class="{ 'd-none': hasGrantedPermission }">
+            Grant microphone permission
+          </a>
+          </a>
+        </div>
+
+        <!-- Bottom-Right Cell -->
+        <div class="col-md-6 d-flex justify-content-center align-items-center p-4">
+          <div class="d-grid col-12 col-lg-6 mx-auto mb-4">
+  <a
+    @click.prevent="nextClick"
+    id="btn-continue"
+    class="btn btn-primary"
+    :class="{ disabled: !isContinueEnabled || isLoadingNextPage }"
+    :aria-disabled="!isContinueEnabled || isLoadingNextPage"
+  >
+    <template v-if="!isLoadingNextPage">
+      Continue
+    </template>
+    <template v-else>
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span class="visually-hidden" role="status">Loading...</span>
+    </template>
+  </a>
+</div>
+
+  
+      </div>
+      <BottomBar />
+    </section>
+*/

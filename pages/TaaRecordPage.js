@@ -1,6 +1,5 @@
-import TopBar from "../components/TopBar.js";
-import TikiMessage from "../components/TikiMessage.js";
-import BottomBar from "../components/BottomBar.js";
+import Header from "../components/Header.js";
+import Footer from "../components/Footer.js";
 import {
   initialiseTimeline,
   initScatterplot,
@@ -22,64 +21,38 @@ export default {
       tongueMesh: null,
     };
   },
-  components: { TopBar, TikiMessage, BottomBar },
+  components: { Header, Footer },
   template: `
-    <TopBar/>
+  <Header />
+  <section class="container-fluid full-vh d-flex flex-column">
 
-    <!-- Main Content - full width -->
-    <div class="container-fluid full-vh d-flex flex-column">
-      <div class="row" style="height:15%;"></div>
+      <!--Empty space for header-->
+      <div class="row" style="height: 15vh;"></div>
+      
+      <div class="row" style="height: 85vh">
+        <!-- LHS -->
+        <div class="col">
+          
+          <!-- Back Button / Info -->
+          <div class="row"></div>
 
-      <div class="row my-5 align-items-stretch">
-        <!-- Left column: 3D model -->
-        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-          <div id="three-container" style="width: 100%; height: 300px;"></div>
+          <!-- Vowels -->
+          <div class ="row"></div>
         </div>
 
-        <!-- Right column: graphs + controls -->
-        <div class="col-12 col-lg-6 d-flex flex-column justify-content-between h-85">
-          <div class="d-lg-flex flex-column flex-grow-1">
-            <!-- Dotplot -->
-            <div id="playground-dotplot" class="d-lg-block js-plotly-plot"
-                 :class="{'d-none': graphDisplayed !== 'dotplot'}"
-                 ref="dotplot"></div>
+        <!-- RHS -->
+        <div class ="col">
+          
+          <!-- Formant Plot(s) -->
+          <div class ="row"></div>
 
-            <!-- Heatmap (if you wire it up later) -->
-            <div id="playground-heatmap" class="d-lg-block js-plotly-plot"
-                 :class="{'d-none': graphDisplayed !== 'heatmap'}"
-                 ref="heatmap"></div>
-
-            <!-- Timeline -->
-            <div id="playground-timeline" class="d-lg-block js-plotly-plot"
-                 :class="{'d-none': graphDisplayed !== 'timeline'}"
-                 ref="timeline"></div>
-          </div>
-
-          <!-- View toggles -->
-          <div class="text-center my-2">
-            <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
-            <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
-            <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'timeline'}" @click="changeDisplayedGraph('timeline')">Timeline View</button>
-          </div>
-
-          <!-- Record controls -->
-          <div class="text-center my-3">
-            <button 
-              id="record"
-              @mousedown.prevent="handleRecordPressed"
-              @touchstart.prevent="handleRecordPressed"
-              @mouseup.prevent="handleRecordReleased"
-              @touchend.prevent="handleRecordReleased"
-              :class="{recording: isRecording}"
-              class="btn btn-primary">
-              <i class="bi bi-mic"></i> Record
-            </button>
-          </div>
+          <!-- Microphone Button -->
+          <div class ="row"></div>
         </div>
+
       </div>
-
-      <div class="row" style="height:10%;"></div>
-    </div>
+    </section>
+  <Footer />  
   `,
 
   methods: {
@@ -213,3 +186,62 @@ export default {
     window.removeEventListener("keyup", this.handleSpaceReleased);
   },
 };
+
+/*
+<TopBar/>
+
+    <!-- Main Content - full width -->
+    <div class="container-fluid full-vh d-flex flex-column">
+      <div class="row" style="height:15%;"></div>
+
+      <div class="row my-5 align-items-stretch">
+        <!-- Left column: 3D model -->
+        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+          <div id="three-container" style="width: 100%; height: 300px;"></div>
+        </div>
+
+        <!-- Right column: graphs + controls -->
+        <div class="col-12 col-lg-6 d-flex flex-column justify-content-between h-85">
+          <div class="d-lg-flex flex-column flex-grow-1">
+            <!-- Dotplot -->
+            <div id="playground-dotplot" class="d-lg-block js-plotly-plot"
+                 :class="{'d-none': graphDisplayed !== 'dotplot'}"
+                 ref="dotplot"></div>
+
+            <!-- Heatmap (if you wire it up later) -->
+            <div id="playground-heatmap" class="d-lg-block js-plotly-plot"
+                 :class="{'d-none': graphDisplayed !== 'heatmap'}"
+                 ref="heatmap"></div>
+
+            <!-- Timeline -->
+            <div id="playground-timeline" class="d-lg-block js-plotly-plot"
+                 :class="{'d-none': graphDisplayed !== 'timeline'}"
+                 ref="timeline"></div>
+          </div>
+
+          <!-- View toggles -->
+          <div class="text-center my-2">
+            <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
+            <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
+            <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'timeline'}" @click="changeDisplayedGraph('timeline')">Timeline View</button>
+          </div>
+
+          <!-- Record controls -->
+          <div class="text-center my-3">
+            <button 
+              id="record"
+              @mousedown.prevent="handleRecordPressed"
+              @touchstart.prevent="handleRecordPressed"
+              @mouseup.prevent="handleRecordReleased"
+              @touchend.prevent="handleRecordReleased"
+              :class="{recording: isRecording}"
+              class="btn btn-primary">
+              <i class="bi bi-mic"></i> Record
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="height:10%;"></div>
+    </div>
+    */

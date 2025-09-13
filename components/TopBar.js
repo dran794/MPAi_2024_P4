@@ -1,6 +1,6 @@
 export default {
   template: `
-  <div class="position-fixed container-fluid d-flex justify-content-center align-items-center w-100"
+<div class="position-fixed container-fluid d-flex justify-content-center align-items-center w-100"
        style="height: 15%; background-color: var(--mpai-theme-dark); z-index: 1060;">
     <div class="row w-100 h-100">
 
@@ -62,26 +62,9 @@ export default {
   </div>
   `,
 
-  data() {
-    return {
-      isRotated: false,
-    };
-  },
-
-  mounted() {
-    const sidebar = document.getElementById("sideBar");
-    sidebar.addEventListener("hidden.bs.offcanvas", () => {
-      this.isRotated = false;
-    });
-  },
+  data() {},
 
   methods: {
-    openSidebar() {
-      this.isRotated = true;
-      const sidebar = document.getElementById("sideBar");
-      const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(sidebar);
-      bsOffcanvas.show();
-    },
     openScienceofSpeaking() {
       this.$router.push({ name: "science-of-speaking" });
     },

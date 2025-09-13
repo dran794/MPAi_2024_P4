@@ -1,6 +1,5 @@
-import TopBar from "../components/TopBar.js";
-import TikiMessage from "../components/TikiMessage.js";
-import BottomBar from "../components/BottomBar.js";
+import Header from "../components/Header.js";
+import Footer from "../components/Footer.js";
 import {
   initialiseTimeline,
   initScatterplot,
@@ -21,69 +20,92 @@ export default {
       isTimelineInitialised: false,
     };
   },
-  components: { TopBar, TikiMessage, BottomBar },
+  components: { Header, Footer },
   template: `
-<TopBar/>
+<Header />
+<section class="container-fluid full-vh d-flex flex-column">
 
-<div class="container-fluid full-vh flex-column">
-  <div class="row" style="height:15%;"></div>
-  <div class="row my-5 align-items-stretch">
-    <!-- Right column (graph + record button) -->
-      <div class="col d-flex flex-column justify-content-between h-85">
-        <div class="d-lg-flex flex-column flex-grow-1">
-          <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'heatmap'}" ref="dotplot"></div>
+  <!-- Empty space for header -->
+  <div class="row" style="height: 15vh;"></div>
+  
+  <div class="row" style="height: 85vh">
+    <!-- LHS -->
+    <div class="col">
+      
+      <!-- Back Button / Info -->
+      <div class="row mb-3">
+        <div class="col-6 d-flex align-items-center">
+          <button type="button" class="btn btn-danger">Back</button>
         </div>
-        <div class="text-center my-3">
-          <button 
-            id="record"
-            @mousedown.prevent="handleRecordPressed"
-            @touchstart.prevent="handleRecordPressed"
-            @mouseup.prevent="handleRecordReleased"
-            @touchend.prevent="handleRecordReleased"
-            :class="{recording: isRecording}"
-            class="btn btn-primary">
-            <i class="bi bi-mic"></i> Record
+        <div class="col-6 d-flex align-items-center justify-content-end">
+          <!-- Info icon trigger (could be a popover or modal) -->
+          <button type="button" class="btn btn-outline-secondary" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#infoModal">
+            Info
           </button>
-          <div class="text-center my-2">
-  <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
-  <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
-</div>
         </div>
       </div>
-  </div>
-  <div class="row">
-    <div class="btn-toolbar justify-content-center align-items-center d-flex" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group me-2" role="group" aria-label="a">
-        <button type="button" class="btn btn-primary">a</button>
-        <button type="button" class="btn btn-primary" @click="aaClick()">ā</button>
-      </div>
-      <div class="btn-group me-2" role="group" aria-label="e">
-        <button type="button" class="btn btn-primary">e</button>
-        <button type="button" class="btn btn-primary">ē</button>
-      </div>
-      <div class="btn-group me-2" role="group" aria-label="i">
-        <button type="button" class="btn btn-primary">i</button>
-        <button type="button" class="btn btn-primary">ī</button>
-      </div>
-      <div class="btn-group me-2" role="group" aria-label="o">
-        <button type="button" class="btn btn-primary">o</button>
-        <button type="button" class="btn btn-primary">ō</button>
-      </div>
-      <div class="btn-group me-2" role="group" aria-label="u">
-        <button type="button" class="btn btn-primary">u</button>
-        <button type="button" class="btn btn-primary">ū</button>
-      </div>
 
+      <!-- Vowels -->
+      <div class="row gy-2">
+        <div class="col-12 d-grid">
+          <button type="button" class="btn btn-primary">Long A</button>
+        </div>
+        <div class="col-12 d-grid">
+          <button type="button" class="btn btn-primary">Long E</button>
+        </div>
+        <div class="col-12 d-grid">
+          <button type="button" class="btn btn-primary">Long I</button>
+        </div>
+        <div class="col-12 d-grid">
+          <button type="button" class="btn btn-primary">Long O</button>
+        </div>
+        <div class="col-12 d-grid">
+          <button type="button" class="btn btn-primary">Long U</button>
+        </div>
+      </div>
     </div>
 
+    <!-- RHS -->
+    <div class="col">
+      
+      <!-- Formant Plot(s) -->
+      <div class="row mb-3">
+        <!-- Put chart/plot canvas here -->
+      </div>
 
+      <!-- Microphone Button -->
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <button type="button" class="btn btn-success btn-lg rounded-circle">
+            🎤
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-
-</div>
-
-
-  <div class="row" style="height: 10%;"></div>
 </section>
+
+<Footer />
+
+<!-- Info Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel">Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Here you can provide instructions or details about the exercise.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     `,
 
@@ -250,3 +272,65 @@ export default {
     window.removeEventListener("keyup", this.handleSpaceReleased);
   },
 };
+
+/*
+<div class="container-fluid full-vh flex-column">
+  <div class="row" style="height:15%;"></div>
+  <div class="row my-5 align-items-stretch">
+    <!-- Right column (graph + record button) -->
+      <div class="col d-flex flex-column justify-content-between h-85">
+        <div class="d-lg-flex flex-column flex-grow-1">
+          <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'heatmap'}" ref="dotplot"></div>
+        </div>
+        <div class="text-center my-3">
+          <button 
+            id="record"
+            @mousedown.prevent="handleRecordPressed"
+            @touchstart.prevent="handleRecordPressed"
+            @mouseup.prevent="handleRecordReleased"
+            @touchend.prevent="handleRecordReleased"
+            :class="{recording: isRecording}"
+            class="btn btn-primary">
+            <i class="bi bi-mic"></i> Record
+          </button>
+          <div class="text-center my-2">
+  <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
+  <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
+</div>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="btn-toolbar justify-content-center align-items-center d-flex" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group me-2" role="group" aria-label="a">
+        <button type="button" class="btn btn-primary">a</button>
+        <button type="button" class="btn btn-primary" @click="aaClick()">ā</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="e">
+        <button type="button" class="btn btn-primary">e</button>
+        <button type="button" class="btn btn-primary">ē</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="i">
+        <button type="button" class="btn btn-primary">i</button>
+        <button type="button" class="btn btn-primary">ī</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="o">
+        <button type="button" class="btn btn-primary">o</button>
+        <button type="button" class="btn btn-primary">ō</button>
+      </div>
+      <div class="btn-group me-2" role="group" aria-label="u">
+        <button type="button" class="btn btn-primary">u</button>
+        <button type="button" class="btn btn-primary">ū</button>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+  <div class="row" style="height: 10%;"></div>
+</section>
+*/

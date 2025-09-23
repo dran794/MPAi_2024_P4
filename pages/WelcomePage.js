@@ -13,7 +13,7 @@ export default {
   
   <!--Top litte text - Kia Ora, Nau Mai Ki-->
   <div class="row align-items-center" style="height: 10vh;">
-    <h1>Kia Ora, Nau Mai Ki</h1>
+    <h3>Kia Ora, Nau Mai Ki</h3>
   </div>
 
   <!--Main Card-->
@@ -26,11 +26,11 @@ export default {
 
     <!-- MPAi full -->
     <div class="col-2 d-flex align-items-center justify-content-center">
-      <div class="bold">
+      <h3 class="bold">
         <span style="color: var(--orange);">M</span>aori<br>
         <span style="color: var(--orange);">P</span>ronunciation<br>
-        <span style="color: var(--orange);">A</span>id Tool
-      </div>
+        <span style="color: var(--orange);">Ai</span>d Tool
+      </h3>
     </div>
 
     <!-- Begin Button -->
@@ -46,10 +46,14 @@ export default {
 
   <!--Short description of MPAi-->
   <div class="row flex-grow-1 my-5">
-    <p class="text">
+    <div class="col-8">
+      <p class="text">
       MPAi can help compare your pronunciation of Te Reo Maori vowels to
       sounds produced by Kaumatua and Kuia (elder) speakers
-    </p>
+      </p>
+    </div>
+    <!-- Empty Space>
+    <div class="col-4"></div>
   </div>
 
   <!--Footer-->

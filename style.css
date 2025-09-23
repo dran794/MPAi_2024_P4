@@ -1,12 +1,11 @@
 /* Global Styles */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap");
 
 /* Base palette (doesn't change) */
 :root {
   --white: hsl(0, 0%, 100%);
   --off-white: hsl(0, 0%, 90%);
-  --grey-400: hsl(0,0,30%);
+  --grey-400: hsl(0, 0, 30%);
   --grey-500: hsl(0, 0%, 40%);
   --grey-600: hsl(0, 0%, 50%);
   --off-black: hsl(0, 0%, 20%);
@@ -17,9 +16,11 @@
   --cream: hsl(40, 45%, 95%);
 
   /*Base text styling, static*/
-  --title: bold clamp(54px, 6vw,108px)/1.2 var (-ff);
-  --h1: bold clamp(28px, 6vw, 54px)/1.2 var(--ff);
-  --p: normal clamp(14px, 2vw, 18px)/1.6 var(--ff);
+  --title: bold clamp(54px, 6vw, 108px) / 1.2 var (-ff);
+  --h1: bold clamp(28px, 5vw, 76px) / 1.3 var(--ff);
+  --h2: bold clamp(20px, 4vw, 36px) / 1.3 var(--ff);
+  --h3: bold clamp(18px, 3vw, 24px) / 1.4 var(--ff);
+  --p: normal clamp(14px, 2vw, 18px) / 1.6 var(--ff);
 
   /* Light mode defaults */
   --menu-bg: var(--cream);
@@ -39,7 +40,9 @@
     --main-text: var(--white);
     --text: var(--off-white);
     --button-bg: var(--grey-500);
-    --border: var(--grey-600); /* fixed from --grey to --grey-600 for consistency */
+    --border: var(
+      --grey-600
+    ); /* fixed from --grey to --grey-600 for consistency */
   }
 }
 
@@ -49,18 +52,35 @@ body {
   color: var(--text);
 }
 
-title {color: var(--main-text); font: var(--h1);}
+title {
+  color: var(--main-text);
+  font: var(--h1);
+}
 
-h1 {color: var(--main-text); font: var(--h1);}
+h1 {
+  color: var(--main-text);
+  font: var(--h1);
+}
 
-p {color: var(--text); font: var(--p);}
+h2 {
+  color: var(--main-text);
+  font: var(--h2);
+}
+
+h3 {
+  color: var(--main-text);
+  font: var(--h3);
+}
+
+p {
+  color: var(--text);
+  font: var(--p);
+}
 
 /* CSS to change color */
 svg {
-  color: var(--white);  /* Assuming you have --main-text set in your CSS */
+  color: var(--white); /* Assuming you have --main-text set in your CSS */
 }
-
-
 
 /*---------------------------Classes----------------------------*/
 
@@ -81,12 +101,13 @@ svg {
 
 /* Containers below the TopBar */
 .container {
-  padding-top: env(safe-area-inset-top); /* Handles dynamic space if TopBar or viewport changes */
+  padding-top: env(
+    safe-area-inset-top
+  ); /* Handles dynamic space if TopBar or viewport changes */
 }
 
-
 /* Colour Gradients */
-.dashing-fill{
+.dashing-fill {
   color: var(--colorbody);
   background: linear-gradient(
     270deg,
@@ -97,7 +118,8 @@ svg {
   );
   background-size: 300% 300%;
   animation: bg 10s ease-in-out infinite;
-}@keyframes bg {
+}
+@keyframes bg {
   0% {
     background-position: 0% 50%;
   }
@@ -135,7 +157,6 @@ svg {
   padding: 0; /* Adjust padding for icon centering */
 }
 
-
 .buttons {
   display: flex;
   margin: 100px auto;
@@ -146,21 +167,46 @@ svg {
 }
 
 /* Repeating code */
-.buttons > *{
-      font-family: var(--ff);
-    font-size: 2.25rem;
+.buttons > * {
+  font-family: var(--ff);
+  font-size: 2.25rem;
   cursor: pointer;
   text-decoration: none;
   padding: 28px 108px;
   border-radius: 30px;
   transition: var(--transition);
-  }
-.buttons > *:hover{
+}
+.buttons > *:hover {
   transition: var(--transition);
-  }
+}
 
 .footer-btn {
   background: var(--button-bg);
   color: var(--text);
   cursor: pointer;
+  width: 45px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.5s ease, background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-text {
+  opacity: 0;
+  transition: opacity 0.2s ease 0.1s;
+}
+
+/* Hover state */
+.footer-btn:hover {
+  width: max-content;
+  padding-right: 1rem;
+  background-color: color-mix(in srgb, var(--button-bg) 85%, white 15%);
+  /* if color-mix not supported in your browser, use rgba fallback: 
+     background-color: rgba(255,255,255,0.1); layered over your base */
+}
+
+.footer-btn:hover .footer-text {
+  opacity: 1;
 }

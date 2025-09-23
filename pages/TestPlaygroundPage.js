@@ -50,19 +50,19 @@ export default {
       <!-- Vowels -->
       <div class="row gy-2">
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary">Long A</button>
+          <button type="button" class="btn btn-primary" @click="aaClick()">Long A</button>
         </div>
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary">Long E</button>
+          <button type="button" class="btn btn-primary" @click="eeClick()">Long E</button>
         </div>
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary">Long I</button>
+          <button type="button" class="btn btn-primary" @click="iiClick()">Long I</button>
         </div>
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary">Long O</button>
+          <button type="button" class="btn btn-primary @click="ooClick()">Long O</button>
         </div>
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary">Long U</button>
+          <button type="button" class="btn btn-primary @click="uuClick()">Long U</button>
         </div>
       </div>
     </div>
@@ -73,14 +73,31 @@ export default {
       <!-- Formant Plot(s) -->
       <div class="row mb-3">
         <!-- Put chart/plot canvas here -->
+        <!-- Right column (graph + record button) -->
+      <div class="col d-flex flex-column justify-content-between h-85">
+        <div class="d-lg-flex flex-column flex-grow-1">
+          <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'heatmap'}" ref="dotplot"></div>
+        </div>
+        <div class="text-center my-3">
+          <button 
+            id="record"
+            @mousedown.prevent="handleRecordPressed"
+            @touchstart.prevent="handleRecordPressed"
+            @mouseup.prevent="handleRecordReleased"
+            @touchend.prevent="handleRecordReleased"
+            :class="{recording: isRecording}"
+            class="btn btn-primary">
+            <i class="bi bi-mic"></i> Record
+          </button>
+          <div class="text-center my-2">
+  <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
+  <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
+</div>
       </div>
 
       <!-- Microphone Button -->
       <div class="row">
         <div class="col d-flex justify-content-center">
-          <button type="button" class="btn btn-success btn-lg rounded-circle">
-            🎤
-          </button>
         </div>
       </div>
     </div>
@@ -119,26 +136,29 @@ export default {
         query: { redirectTo: "taa-record" },
       });
     },
-    aClick() {
-      this.$router.push({ name: "ta-record" });
+    eeClick() {
+      this.$router.push({
+        name: "audiopermission",
+        query: { redirectTo: "hee-record" },
+      });
     },
-    oClick() {
-      this.$router.push({ name: "te-record" });
+    iiClick() {
+      this.$router.push({
+        name: "audiopermission",
+        query: { redirectTo: "hii-record" },
+      });
     },
-    eClick() {
-      this.$router.push({ name: "ti-record" });
+    ooClick() {
+      this.$router.push({
+        name: "audiopermission",
+        query: { redirectTo: "poo-record" },
+      });
     },
-    uClick() {
-      this.$router.push({ name: "to-record" });
-    },
-    euClick() {
-      this.$router.push({ name: "hee-record" });
-    },
-    aiClick() {
-      this.$router.push({ name: "hii-record" });
-    },
-    auClick() {
-      this.$router.push({ name: "poo-record" });
+    uuClick() {
+      this.$router.push({
+        name: "audiopermission",
+        query: { redirectTo: "tuu-record" },
+      });
     },
     nextClick() {
       this.$router.push({ name: "model-speaker" });

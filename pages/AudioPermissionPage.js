@@ -1,48 +1,156 @@
 import Header from "../components/Header.js";
 import Footer from "../components/Footer.js";
-// import TikiMessage from "../components/TikiMessage.js";
 import { updateAnalysers, initAudio, updateInputSource } from "../audio.js";
-import { config, resources } from "../store.js";
+import { config } from "../store.js";
 
 export default {
+  name: "MicSetup",
   components: { Header, Footer },
 
   template: `
-  <Header />
+    <Header />
 
-  <div class="container-fluid full-vh d-flex flex-column">
+    <div class="container-fluid min-vh-100 d-flex flex-column">
+      <!-- Header spacer -->
+      <div class="row" style="height:15vh;"></div>
 
-    <!--Empty space for header-->
-    <div class="row" style="height: 15vh;"></div>
-  
-    <!-- Main Content -->
-    <div class="row flex-grow-1">
-      
-      <!-- LHS -->
-      <div class="col-6">
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>      
-      </div>
+      <!-- Main Content -->
+      <div class="row flex-grow-1">
+        <!-- LHS -->
+        <div class="col-12 col-lg-6 bg-grey-500 text-light p-4">
+          <div class="row">
+            <h1 class="h3 mb-2">We Can't Hear You!</h1>
+            <p class="mb-4">Please enable your microphone so that we can hear you out!</p>
+          </div>
 
-      <!-- RHS -->
-      <div class="col-6">
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
+          <div class="row g-3 align-items-center">
+            <div class="col-8">
+              <button 
+                v-show="!hasGrantedPermission" 
+                class="btn dashing-fill"
+                type="button"
+                @click="getMicPermission"
+                aria-label="Enable Microphone">
+                Enable Microphone
+              </button>
+            </div>
+            <div class="col-4 text-end">
+              <button 
+                type="button" 
+                class="btn dashing-fill fw-bold"
+                data-bs-toggle="modal" 
+                data-bs-target="#playgroundInfoModal"
+                aria-label="Open information modal">
+                i
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RHS -->
+        <div class="col-12 col-lg-6 p-4">
+          <div class="row">
+            <h2 class="h5 mb-3">Microphone Preview</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8 d-flex flex-column align-items-stretch">
+              <template v-if="hasGrantedPermission">
+                <canvas
+                  id="analyser"
+                  class="w-100 border rounded"
+                  style="background-color: lightgray; aspect-ratio: 16/9;"
+                  :ref="onAnalyserMount"
+                  aria-label="Microphone visualiser">
+                </canvas>
+
+                <h3 class="fs-6 mb-2 mt-3">Choose a Microphone</h3>
+                <ul class="list-group w-100">
+                  <li 
+                    class="list-group-item d-flex align-items-center" 
+                    v-for="device in inputDevices" 
+                    :key="device.deviceId">
+                    <input
+                      class="form-check-input me-2"
+                      type="radio"
+                      :checked="device.deviceId === config.audioInput"
+                      @change="audioInputChanged(device.deviceId)"
+                      :value="device.deviceId"
+                      :id="'audioinputcb-' + device.deviceId"
+                      name="audio-input-choice"
+                    />
+                    <label class="form-check-label" :for="'audioinputcb-' + device.deviceId">
+                      {{ device.label || 'Microphone' }}
+                    </label>
+                  </li>
+                </ul>
+              </template>
+
+              <template v-else>
+                <div class="alert alert-warning mt-2" role="alert">
+                  Microphone permission not granted yet.
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col">
+              <button 
+                class="btn dashing-fill fw-bold"
+                type="button"
+                :disabled="!isContinueEnabled"
+                @click="nextClick"
+                aria-disabled="!isContinueEnabled">
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <Footer />
+    <Footer />
 
-        
-    `,
+    <!-- Info Modal -->
+    <div 
+      class="modal fade" 
+      id="playgroundInfoModal" 
+      tabindex="-1" 
+      aria-labelledby="playgroundInfoModalLabel" 
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="playgroundInfoModalLabel">About the Playground</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Hi there! This is some info about the playground.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  data() {
+    return {
+      hasGrantedPermission: false,
+      inputDevices: [],
+      isContinueEnabled: false,
+      config, // shared store
+    };
+  },
+
   methods: {
     prevClicked() {
       this.$router.replace("/");
     },
+
     nextClick() {
       const target = this.$route.query.redirectTo;
       if (this.$route.redirectedFrom) {
@@ -53,68 +161,44 @@ export default {
         this.$router.push({ name: "taa-record" });
       }
     },
-    analyserVisibilityChanged(element) {
-      if (!element) {
-        return;
-      }
-      updateAnalysers(element);
+
+    onAnalyserMount(el) {
+      if (!el) return;
+      updateAnalysers(el);
     },
-    // async getMicPermission() {
-    //     await initAudio().then(() => {
-    //         this.hasGrantedPermission = true;
-    //         config.hasMicPermission = true;
-    //         navigator.mediaDevices.enumerateDevices().then((devices) => {
-    //             // Save a list of input devices to display.
-    //             this.inputDevices = devices.filter(device => device.kind === "audioinput");
-    //             // Sets default device to be the initial selected device.
-    //             const defaultDevice = this.inputDevices.find(device => device.deviceId === "default")
-    //             this.config.audioInput = defaultDevice ? "default" : this.inputDevices[0].deviceId;
-    //         }, () => { console.log("Failed to enumerate devices.") });
-    //     }, () => {
-    //         this.hasGrantedPermission = false;
-    //         config.hasMicPermission = false;
-    //     });
-    //     return this.hasGrantedPermission;
-    // },
 
     async getMicPermission() {
       try {
-        await initAudio(); // returns cached promise if already done
+        await initAudio(); // cached if already initialised
         this.hasGrantedPermission = true;
-        config.hasMicPermission = true;
         this.isContinueEnabled = true;
+        this.config.hasMicPermission = true;
 
-        if (!this.inputDevices?.length) {
+        if (!this.inputDevices.length) {
           const devices = await navigator.mediaDevices.enumerateDevices();
           this.inputDevices = devices.filter((d) => d.kind === "audioinput");
+
           const defaultDevice = this.inputDevices.find(
             (d) => d.deviceId === "default"
           );
           this.config.audioInput = defaultDevice
             ? "default"
-            : this.inputDevices[0]?.deviceId;
+            : this.inputDevices[0]?.deviceId ?? null;
         }
       } catch (err) {
         console.error("Mic init failed:", err);
         this.hasGrantedPermission = false;
-        config.hasMicPermission = false;
+        this.isContinueEnabled = false;
+        this.config.hasMicPermission = false;
       }
       return this.hasGrantedPermission;
     },
+
     audioInputChanged(newInputId) {
       updateInputSource(newInputId);
       this.config.audioInput = newInputId;
     },
   },
-  data() {
-    return {
-      hasCheckedPermission: false,
-      hasGrantedPermission: null,
-      inputDevices: [],
-      config,
-    };
-  },
-  mounted() {},
 };
 
 /**

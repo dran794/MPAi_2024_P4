@@ -59,10 +59,10 @@ export default {
           <button type="button" class="btn btn-primary" @click="iiClick()">Long I</button>
         </div>
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary @click="ooClick()">Long O</button>
+          <button type="button" class="btn btn-primary" @click="ooClick()">Long O</button>
         </div>
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary @click="uuClick()">Long U</button>
+          <button type="button" class="btn btn-primary" @click="uuClick()">Long U</button>
         </div>
       </div>
     </div>

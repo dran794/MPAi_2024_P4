@@ -34,7 +34,7 @@ const appRoutes = [
     { name: 'taa-record', path: '/taa-record', component: () => import("./pages/TaaRecordPage.js"), beforeEnter: checkAudioPermission },
     { name: 'hee-record', path: '/hee-record', component: () => import("./pages/HeeRecordPage.js"), beforeEnter: checkAudioPermission },
     { name: 'hii-record', path: '/hii-record', component: () => import("./pages/HiiRecordPage.js"), beforeEnter: checkAudioPermission },
-    { name: 'po-record', path: '/poo-record', component: () => import("./pages/PooRecordPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'poo-record', path: '/poo-record', component: () => import("./pages/PooRecordPage.js"), beforeEnter: checkAudioPermission },
     { name: 'tuu-record', path: '/tuu-record', component: () => import("./pages/TuuRecordPage.js"), beforeEnter: checkAudioPermission },
     { name: 'finish', path: '/finish', component: FinishPage }
 ];
@@ -43,6 +43,10 @@ const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
   routes: appRoutes,
 });
+
+// 🔍 Sanity log here
+console.log("Registered routes:", router.getRoutes().map(r => ({ name: r.name, path: r.path })));
+console.log("Resolve taa-record:", router.resolve({ name: "taa-record" }));
 
 // Grab participant id and password, put into config.
 const urlParams = new URLSearchParams(window.location.search);

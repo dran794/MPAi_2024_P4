@@ -1,6 +1,6 @@
 export default {
   template: `
-<div class="position-fixed container-fluid d-flex flex-column w-100" style="height: 16vh; z-index: 1060;">
+<div class="position-fixed container-fluid d-flex flex-column w-100" style="height: 16vh; z-index: 1060; background-color: var(--off-black);">
     <div class="row w-100" style="height: 95%">
         <!--Section for Sidebar Button-->
         <div class="col-2"></div>

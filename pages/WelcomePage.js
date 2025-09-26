@@ -9,13 +9,15 @@ export default {
   },
 
   template: `
-  <div class="container-fluid" style="height: 100vh; flex-direction: column;">
-  
-  <!--Top litte text - Kia Ora, Nau Mai Ki-->
-  <div class="row align-items-center" style="height: 10vh;">
-    <h3>Kia Ora, Nau Mai Ki</h3>
-  </div>
+<div class="container-fluid min-vh-100 d-flex flex-column">
 
+  <!-- Top little text - Kia Ora, Nau Mai Ki -->
+  <div class="row d-flex align-items-center justify-content-center" style="height:7.5vh;">
+    <div class="col-auto text-center">
+      <h3 class="m-0">Kia Ora, Nau Mai Ki</h3>
+    </div>
+  </div>
+  
   <!--Main Card-->
   <div class="row main-card" style="height: 37.5vh;">
     
@@ -26,7 +28,7 @@ export default {
 
     <!-- MPAi full -->
     <div class="col-2 d-flex align-items-center justify-content-center">
-      <h3 class="bold">
+      <h3 class="bold text-white">
         <span style="color: var(--orange);">M</span>aori<br>
         <span style="color: var(--orange);">P</span>ronunciation<br>
         <span style="color: var(--orange);">Ai</span>d Tool
@@ -34,9 +36,9 @@ export default {
     </div>
 
     <!-- Begin Button -->
-    <div class="col-6">
+    <div class="col-6 d-flex align-items-center justify-content-center">
       <div class="buttons d-flex align-items-center justify-content-center">
-        <a class="dashing-fill bold" @click="nextPage()">Begin</a>
+        <a class="dashing-fill bold text-white" @click="nextPage()">Begin</a>
       </div>
     </div>
   </div>
@@ -52,7 +54,7 @@ export default {
       sounds produced by Kaumatua and Kuia (elder) speakers
       </p>
     </div>
-    <!-- Empty Space>
+    <!-- Empty Space-->
     <div class="col-4"></div>
   </div>
 

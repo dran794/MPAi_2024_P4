@@ -7,6 +7,7 @@ import {
   stopRecording,
   updateAnnotations,
   uploadAudioBlob,
+  setPlotMode
 } from "../audio.js";
 import { config, resources } from "../store.js";
 
@@ -26,7 +27,7 @@ export default {
 <section class="container-fluid full-vh d-flex flex-column">
 
   <!-- Empty space for header -->
-  <div class="row" style="height: 15vh;"></div>
+  <div class="row" style="height: 20vh;"></div>
   
   <div class="row" style="height: 85vh">
     <!-- LHS -->
@@ -48,58 +49,59 @@ export default {
       </div>
 
       <!-- Vowels -->
-      <div class="row gy-2">
-        <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary" @click="aaClick()">Long A</button>
+      <div class="row gy-2 px-5">
+        <div class="col-12 d-grid mb-2">
+          <button type="button" class="btn vowel-long" @click="aaClick()">ā</button>
+        </div>
+        <div class="col-12 d-grid mb-2">
+          <button type="button" class="btn vowel-long" @click="eeClick()">ē</button>
+        </div>
+        <div class="col-12 d-grid mb-2">
+          <button type="button" class="btn vowel-long" @click="iiClick()">ī</button>
+        </div>
+        <div class="col-12 d-grid mb-2">
+          <button type="button" class="btn vowel-long" @click="ooClick()">ō</button>
         </div>
         <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary" @click="eeClick()">Long E</button>
-        </div>
-        <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary" @click="iiClick()">Long I</button>
-        </div>
-        <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary" @click="ooClick()">Long O</button>
-        </div>
-        <div class="col-12 d-grid">
-          <button type="button" class="btn btn-primary" @click="uuClick()">Long U</button>
+          <button type="button" class="btn vowel-long" @click="uuClick()">ū</button>
         </div>
       </div>
     </div>
 
     <!-- RHS -->
     <div class="col">
-      
-      <!-- Formant Plot(s) -->
-      <div class="row mb-3">
-        <!-- Put chart/plot canvas here -->
-        <!-- Right column (graph + record button) -->
-      <div class="col d-flex flex-column justify-content-between h-85">
-        <div class="d-lg-flex flex-column flex-grow-1">
-          <div id="playground-dotplot" class="d-lg-block js-plotly-plot" :class="{'d-none': graphDisplayed === 'heatmap'}" ref="dotplot"></div>
-        </div>
-        <div class="text-center my-3">
-          <button 
-            id="record"
-            @mousedown.prevent="handleRecordPressed"
-            @touchstart.prevent="handleRecordPressed"
-            @mouseup.prevent="handleRecordReleased"
-            @touchend.prevent="handleRecordReleased"
-            :class="{recording: isRecording}"
-            class="btn btn-primary">
-            <i class="bi bi-mic"></i> Record
-          </button>
-          <div class="text-center my-2">
-  <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
-  <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
-</div>
+    <!-- Formant Plot(s) -->
+<div class="row mb-3">
+  <div class="col d-flex flex-column justify-content-between h-85">
+    <div class="d-lg-flex flex-column h-100 flex-grow-1">
+      <!-- One container for both modes -->
+      <div id="playground-dotplot"
+           class="js-plotly-plot plot-wrap"
+           ref="dotplot"></div>
+    </div>
+
+    <!-- Optional mode toggle -->
+    <div class="text-center my-3">
+      <div class="btn-group" role="group" aria-label="Plot mode">
+        <button class="btn dashing-fill rounded-pill px-3 py-1 me-2"
+                @click="graphDisplayed='scatter'; setPlotMode('scatter')">Scatter</button>
+        <button class="btn dashing-fill rounded-pill px-3 py-1"
+                @click="graphDisplayed='heatmap'; setPlotMode('heatmap')">Heatmap</button>
       </div>
 
-      <!-- Microphone Button -->
-      <div class="row">
-        <div class="col d-flex justify-content-center">
-        </div>
-      </div>
+      <button id="record"
+              @mousedown.prevent="handleRecordPressed"
+              @touchstart.prevent="handleRecordPressed"
+              @mouseup.prevent="handleRecordReleased"
+              @touchend.prevent="handleRecordReleased"
+              :class="{recording: isRecording}"
+              class="btn rounded-pill dashing-fill text-white ms-3">
+        <i class="bi bi-mic"></i> Record
+      </button>
+    </div>
+  </div>
+</div>
+
     </div>
   </div>
 </section>
@@ -127,6 +129,7 @@ export default {
     `,
 
   methods: {
+    setPlotMode,
     prevPage() {
       this.$router.push({ name: "welcome" });
     },

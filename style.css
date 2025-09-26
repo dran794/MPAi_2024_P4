@@ -14,6 +14,10 @@
   --red: hsl(0, 50%, 45%);
   --light-blue: hsl(220, 100%, 75%);
   --cream: hsl(40, 45%, 95%);
+  --main-card-color: hsl(0, 0%, 20%);
+    --accent-start: var(--orange);
+  --accent-end: hsl(20 70% 40%);
+  --accent-text: var(--white);
 
   /*Base text styling, static*/
   --title: bold clamp(54px, 6vw, 108px) / 1.2 var (-ff);
@@ -40,9 +44,11 @@
     --main-text: var(--white);
     --text: var(--off-white);
     --button-bg: var(--grey-500);
-    --border: var(
-      --grey-600
-    ); /* fixed from --grey to --grey-600 for consistency */
+    --border: var(--grey-600); /* fixed from --grey to --grey-600 for consistency */
+    --main-card-color: hsl(0, 0%, 40%);
+      --accent-start: var(--orange);
+  --accent-end: hsl(20 70% 37%);
+  --accent-text: var(--white);
   }
 }
 
@@ -77,6 +83,10 @@ p {
   font: var(--p);
 }
 
+button {
+  color: var(--off-white);
+}
+
 /* CSS to change color */
 svg {
   color: var(--white); /* Assuming you have --main-text set in your CSS */
@@ -85,7 +95,7 @@ svg {
 /*---------------------------Classes----------------------------*/
 
 .main-card {
-  background-color: var(--grey-500);
+  background-color: var(--main-card-color);
 }
 
 /* Fixed TopBar */
@@ -210,3 +220,65 @@ svg {
 .footer-btn:hover .footer-text {
   opacity: 1;
 }
+
+/* Footer itself is "transparent" to clicks and not stacked high */
+.footer-bar{
+  pointer-events: none;         /* clicks pass through the bar */
+  background: transparent;      /* keep your page visible below */
+  z-index: auto !important;     /* don't lift the whole footer */
+}
+
+/* Only buttons are interactive + visually raised */
+.footer-btn.raised{
+  pointer-events: auto;         /* re-enable clicks on buttons */
+  position: relative;
+  z-index: 1031;                /* above page content, below Bootstrap modals/backdrop */
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+  transform: translateZ(0);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.footer-btn.raised:hover{
+  box-shadow: 0 12px 28px rgba(0,0,0,.22);
+  transform: translateY(-1px);
+}
+
+/* Elegant single-pill button */
+.vowel-long {
+  appearance: none;
+  border: none;
+  width: 100%;
+  height: 56px;
+  border-radius: 999px; /* full pill */
+  background: grey;
+  color: var(--accent-text);
+  font: 700 clamp(18px, 3vw, 28px)/1 var(--ff);
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 16px hsl(0 0% 0% / 0.18), inset 0 1px 0 hsl(0 0% 100% / 0.15);
+  display: grid;
+  place-items: center;
+  transition: transform 120ms ease, filter 150ms ease, box-shadow 150ms ease;
+}
+
+.vowel-long:hover { filter: brightness(1.04); }
+.vowel-long:active { transform: translateY(1px) scale(0.99); }
+
+/* Keyboard focus */
+.vowel-long:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--orange), white 45%);
+  outline-offset: 2px;
+}
+
+/* Optional: 'selected' state if you track which vowel is active */
+.vowel-long.is-current {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--orange), white 55%),
+              0 6px 16px hsl(0 0% 0% / 0.22);
+}
+
+/* Make a reusable wrapper for Plotly */
+.plot-wrap {
+  width: 100%;
+  height: 60vh;           /* change this: 40vh, 60vh, etc. */
+  min-height: 280px;      /* optional floor */
+}
+

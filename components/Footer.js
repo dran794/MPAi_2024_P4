@@ -1,27 +1,72 @@
 export default {
+  data() {
+    return {
+      isDark: false,
+    };
+  },
+  mounted() {
+    // Restore saved theme, or fall back to system preference
+    const saved = localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") {
+      this.setTheme(saved);
+    } else {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      this.setTheme(prefersDark ? "dark" : "light");
+    }
+  },
+  methods: {
+    setTheme(theme) {
+      this.isDark = theme === "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    },
+    toggleTheme() {
+      this.setTheme(this.isDark ? "light" : "dark");
+    },
+  },
   template: `
-    <footer class="fixed-bottom container-fluid d-flex flex-column w-100" style="height: 7.5vh; z-index: 1010;">
-      <div class="row">
+<footer class="fixed-bottom container-fluid d-flex flex-column w-100 footer-bar" style="height:7.5vh;">
+  <div class="row">
 
-        <!-- Information Button -->
-        <div class="col justify-content-center align-items-center d-flex">
-          <button type="button" class="btn footer-btn rounded-pill" data-bs-toggle="modal" data-bs-target="#infoModal">
-            <i class="bi bi-info-circle"></i>
-            <span class="footer-text"> About Us</span>
-          </button></div>
+    <!-- Information -->
+    <div class="col d-flex justify-content-center align-items-center">
+      <button type="button" class="btn footer-btn raised rounded-pill"
+              data-bs-toggle="modal" data-bs-target="#infoModal">
+        <i class="bi bi-info-circle"></i>
+        <span class="footer-text"> About Us</span>
+      </button>
+    </div>
 
-        <!-- Acknowledgement Button -->
-        <div class="col justify-content-center align-items-center d-flex"><button type="button" class="btn footer-btn rounded-pill" data-bs-toggle="modal" data-bs-target="#acknowledgementModal"><i class="bi bi-award"></i>
-  <span class="footer-text"> Acknowledgements</span></button></div>
+    <!-- Acknowledgements -->
+    <div class="col d-flex justify-content-center align-items-center">
+      <button type="button" class="btn footer-btn raised rounded-pill"
+              data-bs-toggle="modal" data-bs-target="#acknowledgementModal">
+        <i class="bi bi-award"></i>
+        <span class="footer-text"> Acknowledgements</span>
+      </button>
+    </div>
 
-        <!-- Night-->
-        <div class="col justify-content-center align-items-center d-flex"><button type="button" class="btn footer-btn rounded-pill"><i class="bi bi-moon-stars"></i>
-  <span class="footer-text"> Night Mode</span></button></div>
+    <!-- Night Mode (toggle) -->
+    <div class="col d-flex justify-content-center align-items-center">
+      <button type="button" class="btn footer-btn raised rounded-pill"
+              @click="toggleTheme" :aria-pressed="isDark ? 'true' : 'false'">
+        <i :class="isDark ? 'bi bi-brightness-high' : 'bi bi-moon-stars'"></i>
+        <span class="footer-text">{{ isDark ? 'Light Mode' : 'Night Mode' }}</span>
+      </button>
+    </div>
 
-        <!-- Language Button -->
-        <div class="col justify-content-center align-items-center d-flex"><button type="button" class="btn footer-btn rounded-pill" data-bs-toggle="modal" data-bs-target="#languageSelectModal"><i class="bi bi-translate"></i>
-  <span class="footer-text"> Language Select</span></button></div>
-    </footer>
+    <!-- Language -->
+    <div class="col d-flex justify-content-center align-items-center">
+      <button type="button" class="btn footer-btn raised rounded-pill"
+              data-bs-toggle="modal" data-bs-target="#languageSelectModal">
+        <i class="bi bi-translate"></i>
+        <span class="footer-text"> Language Select</span>
+      </button>
+    </div>
+
+  </div>
+</footer>
+
 
 
     <!-- Modals Here -->

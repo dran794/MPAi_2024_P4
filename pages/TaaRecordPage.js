@@ -29,10 +29,10 @@ export default {
 
   template: `
     <Header />
-    <div class="row" style="height: 15vh;"></div>
+    <div class="row" style="height: 20vh;"></div>
 
     <main class="container-fluid">
-      <div class="row" style="height: 85vh;">
+      <div class="row" style="height: 80vh;">
 
         <!-- LEFT COLUMN -->
         <div class="col-12 col-lg-5 d-flex flex-column">
@@ -41,7 +41,7 @@ export default {
           </div>
           <div class="row flex-grow-1">
             <div class="col p-3">
-              <img src="images/test_image.png" class="img-fluid rounded border" alt="Ā vowel articulation">
+              <img src="images/formant2tongue.jpg" class="img-fluid rounded border" alt="Ā vowel articulation">
             </div>
           </div>
         </div>
@@ -55,36 +55,31 @@ export default {
           </div>
 
           <div class="row flex-grow-1">
-            <div class="col p-3 d-flex flex-column">
+               <!-- Formant Plot(s) -->
+<div class="row mb-3">
+  <div class="col d-flex flex-column justify-content-between h-85">
+    <div class="d-lg-flex flex-column h-100 flex-grow-1">
+      <!-- One container for both modes -->
+      <div id="playground-dotplot"
+           class="js-plotly-plot plot-wrap"
+           ref="dotplot"></div>
+    </div>
 
-              <div class="flex-grow-1 d-flex flex-column">
-                <div
-                  id="playground-dotplot"
-                  ref="dotplot"
-                  class="js-plotly-plot border rounded"
-                  style="min-height: 320px; height: 100%; background: #f7f7f7;"
-                  :class="{'d-none': graphDisplayed === 'heatmap'}">
-                </div>
-              </div>
+    <!-- Optional mode toggle -->
+    <div class="text-center my-3">
+      <div class="btn-group" role="group" aria-label="Plot mode">
+      </div>
 
-              <div class="text-center my-3">
-                <button
-                  id="record"
-                  @mousedown.prevent="handleRecordPressed"
-                  @touchstart.prevent="handleRecordPressed"
-                  @mouseup.prevent="handleRecordReleased"
-                  @touchend.prevent="handleRecordReleased"
-                  :class="{recording: isRecording}"
-                  class="btn btn-primary">
-                  <i class="bi bi-mic"></i> Record
-                </button>
-
-                <div class="text-center my-2">
-                  <button class="btn btn-outline-dark me-2" :class="{'active': graphDisplayed === 'dotplot'}" @click="changeDisplayedGraph('dotplot')">Token View</button>
-                  <button class="btn btn-outline-dark" :class="{'active': graphDisplayed === 'heatmap'}" @click="changeDisplayedGraph('heatmap')">Heatmap View</button>
-                </div>
-              </div>
-
+      <button id="record"
+              @mousedown.prevent="handleRecordPressed"
+              @touchstart.prevent="handleRecordPressed"
+              @mouseup.prevent="handleRecordReleased"
+              @touchend.prevent="handleRecordReleased"
+              :class="{recording: isRecording}"
+              class="btn rounded-pill dashing-fill text-white ms-3">
+        <i class="bi bi-mic"></i> Record
+      </button>
+    </div>
             </div>
           </div>
 

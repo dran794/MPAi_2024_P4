@@ -12,33 +12,37 @@ export default {
 
     <div class="container-fluid min-vh-100 d-flex flex-column">
       <!-- Header spacer -->
-      <div class="row" style="height:15vh;"></div>
+      <div class="row" style="height:16vh;"></div>
 
       <!-- Main Content -->
-      <div class="row flex-grow-1">
+<div class="row flex-grow-1 d-flex align-items-center">  <!-- added d-flex align-items-center -->
         <!-- LHS -->
-        <div class="col-12 col-lg-6 bg-grey-500 text-light p-4">
-          <div class="row">
-            <h1 class="h3 mb-2">We Can't Hear You!</h1>
-            <p class="mb-4">Please enable your microphone so that we can hear you out!</p>
+        <div class="col-12 col-lg-6 bg-grey-500 text-light p-4
+                    d-flex flex-column justify-content-center align-items-center text-center h-100">
+
+          <div class="row w-100 mb-4">
+            <h1 class="mb-2">We Can't Hear You!</h1>
+            <p class="mb-0">Please enable your microphone so that we can hear you out!</p>
           </div>
 
-          <div class="row g-3 align-items-center">
-            <div class="col-8">
-              <button 
-                v-show="!hasGrantedPermission" 
-                class="btn dashing-fill"
+          <div class="row g-3 w-100">
+            <div class="col-12 col-md-8 d-flex justify-content-center">
+              <button
+                v-show="!hasGrantedPermission"
+                class="btn dashing-fill rounded-pill px-4 py-2"
                 type="button"
                 @click="getMicPermission"
                 aria-label="Enable Microphone">
                 Enable Microphone
               </button>
             </div>
-            <div class="col-4 text-end">
-              <button 
-                type="button" 
-                class="btn dashing-fill fw-bold"
-                data-bs-toggle="modal" 
+
+            <div class="col-12 col-md-4 d-flex justify-content-center">
+              <button
+                type="button"
+                class="btn dashing-fill fw-bold rounded-circle d-inline-flex align-items-center justify-content-center"
+                style="width: 44px; height: 44px;"
+                data-bs-toggle="modal"
                 data-bs-target="#playgroundInfoModal"
                 aria-label="Open information modal">
                 i
@@ -46,6 +50,7 @@ export default {
             </div>
           </div>
         </div>
+
 
         <!-- RHS -->
         <div class="col-12 col-lg-6 p-4">
@@ -97,7 +102,7 @@ export default {
           <div class="row mt-4">
             <div class="col">
               <button 
-                class="btn dashing-fill fw-bold"
+                class="btn dashing-fill rounded-pill px-4 py-2 text-white"
                 type="button"
                 :disabled="!isContinueEnabled"
                 @click="nextClick"
@@ -108,7 +113,9 @@ export default {
           </div>
         </div>
       </div>
-    </div>
+      <div class="row" style="height:15vh;"></div>
+
+      </div>
 
     <Footer />
 
@@ -119,18 +126,17 @@ export default {
       tabindex="-1" 
       aria-labelledby="playgroundInfoModalLabel" 
       aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="playgroundInfoModalLabel">About the Playground</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            Hi there! This is some info about the playground.
+            Your microphone is used to listen to your pronunciation so analysis and comparison can happen. Your voice is processed on your device and no data is collected. If you are participating in one of our research studies, you can choose to record and send audio samples.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>

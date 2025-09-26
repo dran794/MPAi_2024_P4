@@ -8,18 +8,18 @@ export default {
     <section class="container-fluid full-vh d-flex flex-column">
 
       <!--Empty space for header-->
-      <div class="row" style="height: 15vh;"></div>
+      <div class="row" style="height: 16vh;"></div>
       
       <div class="row" style="height: 85vh">
         
         <!-- Science  of Speaking Menu -->
         <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center .h-100 pointer"  @click="nextPageScience()">
-          <a>Science of Speaking</a>
+          <h1 class="text-white">Science of Speaking</h1>
         </div>
 
         <!-- MPAi Menu -->
         <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center pointer" @click="nextPagePlayground()">
-          <a>MPAi Playground</a>
+          <h1 class="text-white">MPAi Playground</h1>
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@ export default {
   data() {
     return {
       isDark: false,
+      selectedLanguage: "en", // default to English
     };
   },
   mounted() {
@@ -13,6 +14,12 @@ export default {
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       this.setTheme(prefersDark ? "dark" : "light");
     }
+
+    // Restore saved language
+    const lang = localStorage.getItem("language");
+    if (lang) {
+      this.setLanguage(lang);
+    }
   },
   methods: {
     setTheme(theme) {
@@ -22,6 +29,15 @@ export default {
     },
     toggleTheme() {
       this.setTheme(this.isDark ? "light" : "dark");
+    },
+
+    setLanguage(lang) {
+      this.selectedLanguage = lang;
+      document.documentElement.setAttribute("lang", lang); // <html lang="en">
+      localStorage.setItem("language", lang);
+    },
+    applyLanguage() {
+      this.setLanguage(this.selectedLanguage);
     },
   },
   template: `
@@ -84,7 +100,6 @@ export default {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -102,7 +117,6 @@ export default {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -116,11 +130,14 @@ export default {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            ...
+            <select v-model="selectedLanguage" class="form-select">
+              <option value="en">English</option>
+              <option value="mi">Te Reo Māori</option>
+            </select>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" @click="applyLanguage" data-bs-dismiss="modal">Save changes</button>
           </div>
         </div>
       </div>

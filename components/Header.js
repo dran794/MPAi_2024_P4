@@ -7,7 +7,7 @@ export default {
         
         <!-- Center: Title -->
         <div class="col-8 d-flex justify-content-center align-items-center">
-            <h1 @click="menuClick" class="text-white mb-0 pointer">MPAi</h1>
+            <h1 @click="menuClick" class="text-white mb-0" style="cursor: pointer;">MPAi</h1>
         </div>
 
         <!-- Right: Empty space (Equal length as 1st section) -->

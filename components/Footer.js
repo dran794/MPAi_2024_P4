@@ -93,7 +93,7 @@ export default {
             <h1 class="modal-title fs-5" id="infoModal">Modal title</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" style="color: black;">
               <p>MPAi helps learners compare their pronunciation of Te Reo Māori vowels
               with recordings from Kaumātua and Kuia (elder speakers).</p>
               <p>It provides visual feedback and practice exercises. You can finnd out more about this project here: https://www.mpai.auckland.ac.nz/</p>
@@ -112,7 +112,7 @@ export default {
             <h1 class="modal-title fs-5" id="acknowledgementModal">Modal title</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" style="color: black;">
             This version of MPAi was developed by the MPAi team at the University of Auckland, New Zealand. You can find out more here: https://www.mpai.auckland.ac.nz/
           </div>
           <div class="modal-footer">

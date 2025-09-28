@@ -49,7 +49,7 @@ export default {
   <!--Short description of MPAi-->
   <div class="row flex-grow-1 my-5 mx-5">
     <div class="col-8">
-      <p class="text">
+      <p class="text" >
       MPAi can help compare your pronunciation of Te Reo Maori vowels to
       sounds produced by Kaumatua and Kuia (elder) speakers
       </p>

@@ -134,10 +134,7 @@ export default {
       this.$router.push({ name: "welcome" });
     },
     aaClick() {
-      this.$router.push({
-        name: "audiopermission",
-        query: { redirectTo: "taa-record" },
-      });
+      this.$router.push({name: "taa-record" });
     },
     eeClick() {
       this.$router.push({

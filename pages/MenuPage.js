@@ -19,7 +19,7 @@ export default {
 
         <!-- MPAi Menu -->
         <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center pointer" @click="nextPagePlayground()">
-          <h1 class="text-white";>MPAi Playground</h1>
+          <h1 class="text-white">MPAi Playground</h1>
         </div>
       </div>
     </section>

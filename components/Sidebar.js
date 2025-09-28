@@ -51,7 +51,7 @@ export default {
   template: `
     <div>
       <!-- Toggle Button -->
-      <button ref="toggleButton" class="btn btn-outline-secondary position-fixed m-3 z-3" @click.stop="toggleSidebar">
+      <button ref="toggleButton" class="btn btn-outline-secondary z-3" @click.stop="toggleSidebar">
         <i class="bi bi-list" style="font-size: 1.5rem;"></i>
       </button>
 

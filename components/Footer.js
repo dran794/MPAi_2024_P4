@@ -78,7 +78,9 @@ export default {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            ...
+              <p>MPAi helps learners compare their pronunciation of Te Reo Māori vowels
+              with recordings from Kaumātua and Kuia (elder speakers).</p>
+              <p>It provides visual feedback and practice exercises. You can finnd out more about this project here: https://www.mpai.auckland.ac.nz/</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -96,7 +98,7 @@ export default {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            ...
+            This version of MPAi was developed by the MPAi team at the University of Auckland, New Zealand. You can find out more here: https://www.mpai.auckland.ac.nz/
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

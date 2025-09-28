@@ -1,9 +1,14 @@
+import Navigation from './Sidebar.js';
+
 export default {
+  components: { Navigation },
   template: `
 <div class="position-fixed container-fluid d-flex flex-column w-100" style="height: 16vh; z-index: 1010; background-color: var(--off-black);">
     <div class="row w-100" style="height: 95%">
         <!--Section for Sidebar Button-->
-        <div class="col-2"></div>
+        <div class="col-2 d-flex align-items-center">
+          <Navigation />
+        </div>
         
         <!-- Center: Title -->
         <div class="col-8 d-flex justify-content-center align-items-center">

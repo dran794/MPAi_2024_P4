@@ -33,9 +33,7 @@ export default {
     },
     nextPagePlayground() {
       this.$router.push({
-        name: "audiopermission",
-        query: { redirectTo: "test-playground" },
-      });
+        name: "test-playground"});
     },
   },
 };

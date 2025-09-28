@@ -26,16 +26,16 @@ const appRoutes = [
     { name: 'menu', path: '/menu', component: () => import("./pages/MenuPage.js") },
     { name: 'audiopermission', path: '/audiopermission', component: () => import("./pages/AudioPermissionPage.js")},
     { name: 'playground-explanation', path: '/playground-explanation', component: PlaygroundExplanationPage },
-    { name: 'test-playground', path: '/test-playground', component: () => import("./pages/TestPlaygroundPage.js") },
+    { name: 'test-playground', path: '/test-playground', component: () => import("./pages/TestPlaygroundPage.js"), beforeEnter: checkAudioPermission },
     { name: 'playgroundOnly', path: '/playgroundOnly', component: () => import("./pages/PlaygroundOnlyPage.js"), beforeEnter: checkAudioPermission },
     { name: 'playgroundTimelineOnly', path: '/playgroundTimelineOnly', component: () => import("./pages/PlaygroundTimelineOnlyPage.js"), beforeEnter: checkAudioPermission },
     { name: "model-speaker", path: "/model-speaker", component: ModelSpeakerPage },
     { name: 'target', path: '/target', component: () => import("./pages/TargetPage.js"), beforeEnter: checkAudioPermission },
     { name: 'taa-record', path: '/taa-record', component: () => import("./pages/TaaRecordPage.js")},
-    { name: 'hee-record', path: '/hee-record', component: () => import("./pages/HeeRecordPage.js"), beforeEnter: checkAudioPermission },
-    { name: 'hii-record', path: '/hii-record', component: () => import("./pages/HiiRecordPage.js"), beforeEnter: checkAudioPermission },
-    { name: 'poo-record', path: '/poo-record', component: () => import("./pages/PooRecordPage.js"), beforeEnter: checkAudioPermission },
-    { name: 'tuu-record', path: '/tuu-record', component: () => import("./pages/TuuRecordPage.js"), beforeEnter: checkAudioPermission },
+    { name: 'hee-record', path: '/hee-record', component: () => import("./pages/HeeRecordPage.js")},
+    { name: 'hii-record', path: '/hii-record', component: () => import("./pages/HiiRecordPage.js")},
+    { name: 'poo-record', path: '/poo-record', component: () => import("./pages/PooRecordPage.js")},
+    { name: 'tuu-record', path: '/tuu-record', component: () => import("./pages/TuuRecordPage.js")},
     { name: 'finish', path: '/finish', component: FinishPage }
 ];
 

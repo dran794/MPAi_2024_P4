@@ -138,26 +138,22 @@ export default {
     },
     eeClick() {
       this.$router.push({
-        name: "audiopermission",
-        query: { redirectTo: "hee-record" },
+        name: "hee-record"
       });
     },
     iiClick() {
       this.$router.push({
-        name: "audiopermission",
-        query: { redirectTo: "hii-record" },
+        name: "hii-record"
       });
     },
     ooClick() {
       this.$router.push({
-        name: "audiopermission",
-        query: { redirectTo: "poo-record" },
+        name: "poo-record"
       });
     },
     uuClick() {
       this.$router.push({
-        name: "audiopermission",
-        query: { redirectTo: "tuu-record" },
+        name: "tuu-record"
       });
     },
     nextClick() {

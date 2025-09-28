@@ -8,9 +8,9 @@ export default {
           icon: 'mic',
           expanded: false,
           children: [
-            { name: 'Playground Menu', href: '/menu' },
-            { name: 'Model Speaker', href: '/model-speaker' },
-            { name: 'Target', href: '/target' }
+            { name: 'Activity 3', href: '/...' },
+            { name: 'Activity 4', href: '/...' },
+            { name: 'Activity 5', href: '/test-playground' }
           ]
         },
         {
@@ -19,7 +19,9 @@ export default {
           expanded: false,
           children: [
             { name: 'Intro', href: '/science-of-speaking' },
-            { name: 'Test Playground', href: '/test-playground' }
+            { name: 'Activity 1', href: '/...' },
+            { name: 'Activity 2', href: '/...' }
+
           ]
         }
       ]
@@ -58,7 +60,7 @@ export default {
       <!-- Sidebar Drawer -->
       <transition name="slide">
         <div v-if="isOpen" ref="sidebar" class="position-fixed top-0 start-0 bg-light border-end shadow p-3" style="width: 250px; height: 100vh; z-index: 1000;">
-          <h5 class="mb-4">Navigation</h5>
+          <h5 class="mb-4" style="color: black;">Navigation</h5>
           <ul class="nav flex-column">
             <li v-for="item in navItems" :key="item.name" class="nav-item mb-2">
               <div class="d-flex justify-content-between align-items-center nav-link text-dark" @click="toggleDropdown(item)" style="cursor: pointer;">

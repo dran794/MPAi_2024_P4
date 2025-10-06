@@ -19,8 +19,11 @@ export default {
           expanded: false,
           children: [
             { name: 'Intro', href: '/science-of-speaking' },
-            { name: 'Activity 1', href: '/...' },
-            { name: 'Activity 2', href: '/...' }
+            { name: 'Activity 1', href: '/activity-one' },
+            { name: 'Activity 2', href: '/activity-two' },
+            { name: 'Activity 3', href: '/activity-three' },
+            { name: 'Activity 4', href: '/activity-four' },
+            { name: 'Activity 5', href: '/activity-five' }
 
           ]
         }

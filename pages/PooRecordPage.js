@@ -40,8 +40,11 @@ export default {
             <div class="col p-3"><h3 class="mb-2">Ō VOWEL PRACTICE</h3></div>
           </div>
           <div class="row flex-grow-1">
-            <div class="col p-3">
-              <img src="images/phonetics.jpg" class="img-fluid rounded border" alt="Ā vowel articulation">
+            <div class="col p-3 d-flex justify-content-center align-items-center">
+              <!-- Updated video source for ō vowel -->
+              <video width="360" height="360" controls class="img-fluid rounded border" alt="Ō vowel articulation">
+                <source src="videos/oo.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
         </div>
@@ -50,40 +53,48 @@ export default {
         <div class="col-12 col-lg-7 d-flex flex-column">
           <div class="row">
             <div class="col p-3">
-              <p class="mb-0">Perfect the ā vowel using the diagram and formant plot!</p>
+              <!-- Updated clickable sentence for ō vowel -->
+              <p class="mb-0">
+                <a href="#"
+                   @click.prevent="playSample"
+                   style="display:inline-block; text-decoration: underline dotted; font-weight: 600;">
+                  Perfect the ō vowel using the diagram and formant plot! <i class="bi bi-play"></i>
+                </a>
+              </p>
             </div>
           </div>
 
           <div class="row flex-grow-1">
-               <!-- Formant Plot(s) -->
-<div class="row mb-3">
-  <div class="col d-flex flex-column justify-content-between h-85">
-    <div class="d-lg-flex flex-column h-100 flex-grow-1">
-      <!-- One container for both modes -->
-      <div id="playground-dotplot"
-           class="js-plotly-plot plot-wrap"
-           ref="dotplot"></div>
-    </div>
+            <!-- Formant Plot(s) -->
+            <div class="row mb-3">
+              <div class="col d-flex flex-column justify-content-between h-85">
+                <div class="d-lg-flex flex-column h-100 flex-grow-1">
+                  <!-- One container for both modes -->
+                  <div id="playground-dotplot"
+                       class="js-plotly-plot plot-wrap"
+                       ref="dotplot"></div>
+                </div>
 
-    <!-- Optional mode toggle -->
-    <div class="text-center my-3">
-      <div class="btn-group" role="group" aria-label="Plot mode">
-        <button class="btn dashing-fill rounded-pill px-3 py-1 me-2"
-                @click="graphDisplayed='scatter'; setPlotMode('scatter')">Scatter</button>
-        <button class="btn dashing-fill rounded-pill px-3 py-1"
-                @click="graphDisplayed='heatmap'; setPlotMode('heatmap')">Heatmap</button>
-      </div>
+                <!-- Optional mode toggle -->
+                <div class="text-center my-3">
+                  <div class="btn-group" role="group" aria-label="Plot mode">
+                    <button class="btn dashing-fill rounded-pill px-3 py-1 me-2"
+                            @click="graphDisplayed='scatter'; setPlotMode('scatter')">Scatter</button>
+                    <button class="btn dashing-fill rounded-pill px-3 py-1"
+                            @click="graphDisplayed='heatmap'; setPlotMode('heatmap')">Heatmap</button>
+                  </div>
 
-      <button id="record"
-              @mousedown.prevent="handleRecordPressed"
-              @touchstart.prevent="handleRecordPressed"
-              @mouseup.prevent="handleRecordReleased"
-              @touchend.prevent="handleRecordReleased"
-              :class="{recording: isRecording}"
-              class="btn rounded-pill dashing-fill text-white ms-3">
-        <i class="bi bi-mic"></i> Record
-      </button>
-    </div>
+                  <button id="record"
+                          @mousedown.prevent="handleRecordPressed"
+                          @touchstart.prevent="handleRecordPressed"
+                          @mouseup.prevent="handleRecordReleased"
+                          @touchend.prevent="handleRecordReleased"
+                          :class="{recording: isRecording}"
+                          class="btn rounded-pill dashing-fill text-white ms-3">
+                    <i class="bi bi-mic"></i> Record
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -99,7 +110,7 @@ export default {
     prevPage() { this.$router.push({ name: "welcome" }); },
     nextClick() { this.$router.push({ name: "model-speaker" }); },
 
-     handleRecordPressed() {
+    handleRecordPressed() {
       console.log("Record button pressed");
       if (!this.isRecording) {
         this.isRecording = true;
@@ -128,6 +139,19 @@ export default {
       }
     },
 
+    // NEW: play ō sample the same way you do for other vowels
+    playSample() {
+      // Expecting a sample entry under the ō key (long ō sound) for the current model speaker
+      const samples = this.config.modelSpeaker?.samples?.["pō"];
+      if (!samples || !samples.length) {
+        console.warn("No samples found for 'ō' in the currently selected model speaker.");
+        return;
+      }
+      const idx = Math.round(Math.random() * (samples.length - 1));
+      const audio = new Audio(samples[idx]);
+      audio.play();
+    },
+
     changeDisplayedGraph(graphName) {
       this.graphDisplayed = graphName;
 
@@ -140,8 +164,6 @@ export default {
           );
           initScatterplot(this.$refs.dotplot);
           updateAnnotations(this.$refs.dotplot, this.config.language);
-          // Optionally show ellipses or bubbles
-          // updateFormantEllipses(this.$refs.dotplot, formants);
         }
 
         if (graphName === "heatmap") {
@@ -156,6 +178,7 @@ export default {
         window.dispatchEvent(new Event("resize"));
       });
     },
+
     showFormantHeatmap() {
       const allFormants = this.resources.speakerFormants;
       const gender = this.config.modelSpeaker.gender;
@@ -163,8 +186,7 @@ export default {
         (r) => r.length == "long" && r.speaker == gender
       );
 
-      // Example binning
-      const f1Bins = Array.from({ length: 15 }, (_, i) => 2.5 + i * 0.5); // Bark scale
+      const f1Bins = Array.from({ length: 15 }, (_, i) => 2.5 + i * 0.5);
       const f2Bins = Array.from({ length: 15 }, (_, i) => 5.5 + i * 0.5);
 
       const heatmapData = Array(f1Bins.length)
@@ -206,23 +228,19 @@ export default {
       (r) => r.length == "long" && r.speaker == gender
     );
     initScatterplot(this.$refs.dotplot);
-    // updateFormantEllipses(this.$refs.dotplot, formants, this.vowel);
     updateAnnotations(this.$refs.dotplot, this.config.language);
-    // When initialising a plotly graph set to autosize, if the graph is not visible, it will be set to 450px.
-    // On mobile view, timeline is hidden by default so it will be set to 450px, and thus larger than viewport.
-    // This bit of logic checks if the timeline is visible (i.e. on a larger screen). If it is, initialise it. Otherwise,
-    // wait until it is visible to initialise it.
+
     const isTimelineVisible =
-      window
-        .getComputedStyle(this.$refs.timeline)
-        .getPropertyValue("display") !== "none";
+      window.getComputedStyle(this.$refs.timeline).getPropertyValue("display") !== "none";
     if (isTimelineVisible) {
       initialiseTimeline(this.$refs.timeline);
       this.isTimelineInitialised = true;
     }
+
     window.addEventListener("keydown", this.handleSpacePressed);
     window.addEventListener("keyup", this.handleSpaceReleased);
   },
+
   unmounted() {
     window.removeEventListener("keydown", this.handleSpacePressed);
     window.removeEventListener("keyup", this.handleSpaceReleased);

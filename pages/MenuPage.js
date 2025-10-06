@@ -14,12 +14,12 @@ export default {
         
         <!-- Science  of Speaking Menu -->
         <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center .h-100 pointer"  @click="nextPageScience()">
-          <h1 class="text-white" style="text-align: centre;">Science of Speaking</h1>
+          <h1 class="text-white" style="text-align: center;">Science of Speaking</h1>
         </div>
 
         <!-- MPAi Menu -->
         <div class="col-md-6 dashing-fill d-flex justify-content-center align-items-center pointer" @click="nextPagePlayground()">
-          <h1 class="text-white" style="text-align: centre;">MPAi Playground</h1>
+          <h1 class="text-white" style="text-align: center;">MPAi Playground</h1>
         </div>
       </div>
     </section>

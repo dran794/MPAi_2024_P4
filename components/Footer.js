@@ -97,7 +97,7 @@ export default {
               MPAi helps learners compare their pronunciation of Te Reo Māori vowels
               with recordings from Kaumātua and Kuia (elder speakers). 
               It provides visual feedback and practice exercises. 
-              You can finnd out more about this project here: https://www.mpai.auckland.ac.nz/
+              You can find out more about this project here: https://www.mpai.auckland.ac.nz/
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

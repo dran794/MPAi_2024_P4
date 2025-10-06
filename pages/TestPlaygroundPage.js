@@ -98,6 +98,12 @@ export default {
               class="btn rounded-pill dashing-fill text-white ms-3">
         <i class="bi bi-mic"></i> Record
       </button>
+      <button 
+        id="clear"
+        @mousedown.prevent="handleClearPressed"
+        class="btn btn-primary">
+        Clear
+      </button>
     </div>
   </div>
 </div>
@@ -187,6 +193,10 @@ export default {
         stopRecording();
       }
     },
+    handleClearPressed() {
+            console.log("Clear button pressed");
+            this.initialiseGraph();
+        },
 
     changeDisplayedGraph(graphName) {
       this.graphDisplayed = graphName;

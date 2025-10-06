@@ -21,7 +21,7 @@ export default {
       <div class="row flex-grow-1 position-relative">
         <div class="col p-0">
           <iframe 
-            src="https://www.canva.com/design/DAG1DTMLpkU/S-1dA1r9-ZR7Pavc3LIC9A/view?embed"
+            src="https://www.canva.com/design/DAG1DcFlhxo/e2NUiUr3PpIgL2apEIJW6A/view?embed"
             style="width: 100%; height: 100%; margin: 0;" 
             allowfullscreen>
           </iframe>

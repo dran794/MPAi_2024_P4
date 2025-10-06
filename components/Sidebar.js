@@ -8,9 +8,8 @@ export default {
           icon: 'mic',
           expanded: false,
           children: [
-            { name: 'Activity 3', href: '/...' },
-            { name: 'Activity 4', href: '/...' },
-            { name: 'Activity 5', href: '/test-playground' }
+            { name: 'Playground 3', href: '/activity-three-playground' },
+            { name: 'Playground 4', href: '/test-playground' }
           ]
         },
         {
@@ -22,9 +21,7 @@ export default {
             { name: 'Activity 1', href: '/activity-one' },
             { name: 'Activity 2', href: '/activity-two' },
             { name: 'Activity 3', href: '/activity-three' },
-            { name: 'Activity 4', href: '/activity-four' },
-            { name: 'Activity 5', href: '/activity-five' }
-
+            { name: 'Activity 4', href: '/activity-four' }
           ]
         }
       ]

@@ -28,6 +28,7 @@ const appRoutes = [
     { name: 'activity-three', path: '/activity-three', component: () => import("./pages/Activity3Page.js")},
     { name: 'activity-four', path: '/activity-four', component: () => import("./pages/Activity4Page.js")},
     { name: 'activity-five', path: '/activity-five', component: () => import("./pages/Activity5Page.js")},
+    { name: 'activity-three-playground', path: '/activity-three-playground', component: () => import("./pages/Activity3PlaygroundPage.js")},
     { name: 'menu', path: '/menu', component: () => import("./pages/MenuPage.js") },
     { name: 'audiopermission', path: '/audiopermission', component: () => import("./pages/AudioPermissionPage.js")},
     { name: 'playground-explanation', path: '/playground-explanation', component: PlaygroundExplanationPage },

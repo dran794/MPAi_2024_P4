@@ -58,11 +58,15 @@ export default {
           break;
     
         case "activity-three":
+          this.$router.push({ name: "activity-three-playground" });
+          break;
+
+        case "activity-three-playground":
           this.$router.push({ name: "activity-four" });
           break;
     
         case "activity-four":
-          this.$router.push({ name: "activity-five" });
+          this.$router.push({ name: "test-playground" });
           break;
       }
     },

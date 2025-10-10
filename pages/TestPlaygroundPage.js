@@ -36,7 +36,7 @@ export default {
       <!-- Back Button / Info -->
       <div class="row mb-3">
         <div class="col-6 d-flex align-items-center">
-          <button type="button" class="btn btn-danger">Back</button>
+          <button type="button" class="btn btn-danger" >Back</button>
         </div>
         <div class="col-6 d-flex align-items-center justify-content-end">
           <!-- Info icon trigger (could be a popover or modal) -->

@@ -52,6 +52,10 @@ export default {
       const current = this.$route.name;
     
       switch (current) {
+        case "science-of-speaking":
+          this.$router.push({ name: "activity-one" });
+          break;
+
         case "activity-one":
           this.$router.push({ name: "activity-two" });
           break;
@@ -71,6 +75,10 @@ export default {
         case "activity-four":
           this.$router.push({ name: "test-playground" });
           break;
+
+        case "test-playground":
+          this.$router.push({ name: "welcome" });
+          break;
       }
     },
 
@@ -78,6 +86,10 @@ export default {
       const current = this.$route.name;
     
       switch (current) {
+        case "science-of-speaking":
+          this.$router.push({ name: "welcome" });
+          break;
+
         case "activity-one":
           this.$router.push({ name: "science-of-speaking" });
           break;
@@ -96,6 +108,10 @@ export default {
 
         case "activity-four":
           this.$router.push({ name: "activity-three-playground" });
+          break;
+
+        case "test-playground":
+          this.$router.push({ name: "activity-four" });
           break;
       }
     },

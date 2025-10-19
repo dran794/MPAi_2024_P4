@@ -13,3 +13,7 @@ There are three parameters you can specify:
 * `participant_id` - The unique ID for each participant.
 * `password` - The password to upload the recording.
 * `attemptsAllowed` - The number of attempts the participant should make at pronouncing each vowel. Defaults to 5.
+
+## Compendium
+https://drive.google.com/drive/folders/1hcpyDhFyX635YD1Pi7EdgCHskeY4gJUl?usp=drive_link
+
